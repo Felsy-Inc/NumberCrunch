@@ -1,11 +1,11 @@
 <template>
   <div class="container mx-auto">
     <div class="grid grid-cols-2">
-      <section class="place-content-center">
+      <section class="place-content-center px-3">
         <h2 class="block text-5xl mb-1 line-through">
           Stop crunching your head
         </h2>
-        <h1 class="text-6xl text-emerald-400 font-bold mb-8">
+        <h1 class="text-6xl text-primary-400 font-bold mb-8">
           Start crunching numbers
         </h1>
         <h3 class="text-2xl mb-3">
