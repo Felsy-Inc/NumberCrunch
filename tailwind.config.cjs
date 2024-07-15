@@ -1,11 +1,12 @@
-const colors = require("tailwindcss/colors");
+const colors = require('tailwindcss/colors');
 
 module.exports = {
-  theme: {
-    extend: {
-      colors: {
-        primary: colors.emerald,
-      },
+    darkMode: 'class',
+    theme: {
+        extend: {
+            colors: {
+                primary: colors.sky,
+            },
+        },
     },
-  },
 };
