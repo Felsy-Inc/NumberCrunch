@@ -1,14 +1,10 @@
 <template>
-    <header class="border-b border-gray-200 dark:border-gray-700">
-        <div class="app-header py-3 container mx-auto">
-            <Menubar :model="items" class="lg:justify-between">
+    <header class="app-header">
+        <div class="app-header-container">
+            <Menubar :model="items" class="app-header-nav">
                 <template #start>
                     <RouterLink to="/">
-                        <h1
-                            class="text-2xl sm:text-3xl font-bold text-primary-500 dark:text-primary-400"
-                        >
-                            NumberCrunch.io
-                        </h1>
+                        <h1 class="app-header__title">NumberCrunch.io</h1>
                     </RouterLink>
                 </template>
                 <template #item="{ item, props, hasSubmenu }">
@@ -33,6 +29,7 @@
                     <i class="pi pi-bars text-xl" />
                 </template>
                 <template #end>
+                    <DecimalSeparatorToggle />
                     <DarkModeToggle />
                 </template>
             </Menubar>
@@ -42,6 +39,7 @@
 
 <script setup>
 import { ref } from 'vue';
+import DecimalSeparatorToggle from '../base/DecimalSeparatorToggle.vue';
 import DarkModeToggle from '../base/DarkModeToggle.vue';
 
 const items = ref([
@@ -97,24 +95,36 @@ const items = ref([
 
 <style lang="scss">
 .app-header {
+    @apply bg-white dark:bg-black relative;
+
+    &-container {
+        @apply py-3 container mx-auto;
+    }
+
+    &-nav {
+        @apply lg:justify-between;
+    }
+
+    &__title {
+        @apply text-2xl sm:text-3xl font-bold text-primary-500 dark:text-primary-400;
+    }
+
     .p-menubar {
-        border: none;
-        background-color: transparent;
+        @apply border-none bg-transparent;
 
         &-start {
-            width: 100%;
+            @apply w-full;
             @media (min-width: 1024px) {
-                width: auto;
+                @apply w-auto;
             }
         }
 
         &-end {
-            margin-left: 0;
+            @apply flex ml-0 gap-4;
         }
 
         &-button {
-            height: 32px;
-            width: 38px;
+            @apply h-[32px] w-[38px];
         }
     }
 }

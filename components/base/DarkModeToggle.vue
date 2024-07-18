@@ -1,7 +1,7 @@
 <template>
     <Button
         :icon="currentIcon"
-        class="p-button-rounded"
+        class="p-button-rounded text-white"
         size="large"
         @click="toggleDarkMode"
         :class="currentButtonClass"

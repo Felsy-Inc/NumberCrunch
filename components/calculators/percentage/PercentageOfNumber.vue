@@ -1,11 +1,13 @@
 <template>
-    <section class="pon-component flex items-center justify-center py-11 lg:py-20 bg-primary-800">
+    <section class="pon-component">
         <div
             class="flex flex-col lg:flex-row container w-full gap-8 lg:gap-24 place-content-center"
         >
-            <Card class="w-11/12 max-w-md mx-auto lg:mx-0 overflow-hidden border">
+            <Card
+                class="w-11/12 max-w-md mx-auto lg:mx-0 overflow-hidden dark:bg-[rgb(15,15,15)] border border-primary-400"
+            >
                 <template #header>
-                    <div class="border-b">
+                    <div class="border-b border-primary-400">
                         <h2 class="text-xl sm:text-3xl font-bold text-center p-4">
                             Percentage of a number
                         </h2>
@@ -52,9 +54,11 @@
                     />
                 </template>
             </Card>
-            <Card class="w-11/12 max-w-md mx-auto lg:mx-0 overflow-hidden border">
+            <Card
+                class="w-11/12 max-w-md mx-auto lg:mx-0 overflow-hidden border border-primary-400"
+            >
                 <template #header>
-                    <div class="border-b">
+                    <div class="border-b border-primary-400">
                         <h2 class="text-xl sm:text-3xl font-bold text-center p-4">Result</h2>
                     </div>
                 </template>
@@ -91,6 +95,8 @@ const calculatePercentage = () => {
 
 <style lang="scss">
 .pon-component {
+    @apply flex items-center justify-center py-11 lg:py-20;
+
     .p-card-body,
     .p-card-content {
         height: 100%;
