@@ -19,4 +19,3 @@ import PercentageOfNumber from '~/components/calculators/percentage/PercentageOf
     }
 }
 </style>
-v%#U2%mQx5ejAe
