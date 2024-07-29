@@ -7,4 +7,16 @@ export default defineNuxtConfig({
     primevue: {
         importTheme: { from: '@/themes/mytheme.js' },
     },
+    app: {
+        head: {
+            script: [
+                {
+                    hid: 'adsense',
+                    src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js',
+                    async: true,
+                    'data-ad-client': '8907205065732865',
+                },
+            ],
+        },
+    },
 });
