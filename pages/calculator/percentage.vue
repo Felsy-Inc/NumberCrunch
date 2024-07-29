@@ -2,13 +2,11 @@
     <main class="percentage-page">
         <h1 class="percentage-page__title">Percentage Calculators</h1>
         <PercentageOfNumber />
-        <GenericAd />
     </main>
 </template>
 
 <script setup>
 import PercentageOfNumber from '~/components/calculators/percentage/PercentageOfNumber.vue';
-import GenericAd from '~/components/ads/GenericAd.vue';
 </script>
 
 <style lang="scss">
