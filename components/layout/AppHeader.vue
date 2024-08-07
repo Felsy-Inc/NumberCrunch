@@ -167,7 +167,7 @@ const items = ref([
 
 <style lang="scss">
 .app-header {
-    @apply bg-white dark:bg-black relative;
+    @apply relative bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300;
 
     &-container {
         @apply py-3 container mx-auto;

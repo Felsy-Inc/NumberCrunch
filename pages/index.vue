@@ -10,6 +10,6 @@ import IntroductionHero from '~/components/IntroductionHero.vue';
 
 <style lang="scss">
 .home-page {
-    @apply relative;
+    @apply relative flex-1;
 }
 </style>
