@@ -1,6 +1,6 @@
 <template>
     <main class="percentage-page">
-        <h1 class="percentage-page__title">Percentage Calculators</h1>
+        <!-- <h1 class="percentage-page__title">Percentage Calculators</h1> -->
         <PercentageOfNumber />
         <HorizontalLargeAd />
     </main>
@@ -13,7 +13,7 @@ import PercentageOfNumber from '~/components/calculators/percentage/PercentageOf
 
 <style lang="scss">
 .percentage-page {
-    @apply relative flex-1;
+    @apply relative flex-1 my-8 lg:my-24;
 
     &__title {
         @apply py-8 lg:py-24 text-2xl sm:text-6xl font-bold text-center mx-auto w-fit bg-gradient-to-r 

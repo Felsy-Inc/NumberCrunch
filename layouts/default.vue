@@ -15,7 +15,6 @@ import AppFooter from '~/components/layout/AppFooter.vue';
 .layout-default {
     @apply dark:bg-black flex flex-col relative overflow-hidden overflow-y-auto;
     min-height: 100vh;
-    width: 100vw;
 
     // &::before {
     //     content: '';

@@ -5,14 +5,14 @@
         @calculate="calculatePercentage"
     >
         <div>
-            <label for="percentage" class="block font-semibold">Percentage</label>
+            <label for="percentage" class="block font-semibold">Percentage Value</label>
             <InputGroup class="mt-2">
                 <InputNumber
                     id="percentage"
                     v-model="percentage"
-                    placeholder="Enter a percentage"
+                    placeholder="Enter a percentage value"
                     :minFractionDigits="0"
-                    :maxFractionDigits="5"
+                    :maxFractionDigits="2"
                     :useGrouping="false"
                 />
                 <InputGroupAddon>%</InputGroupAddon>

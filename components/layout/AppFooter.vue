@@ -6,16 +6,18 @@
                 <h2 class="app-footer__title">Calculators</h2>
                 <ul>
                     <li class="mb-2">
-                        <a href="/calculator/percentage" class="hover:underline"
-                            >Percentage Calculator</a
+                        <router-link to="/calculator/percentage" class="hover:underline"
+                            >Percentage Calculator</router-link
                         >
                     </li>
                     <li class="mb-2">
-                        <a href="/calculator/percentage" class="hover:underline">BMI Calculator</a>
+                        <router-link to="/calculator/percentage" class="hover:underline"
+                            >BMI Calculator</router-link
+                        >
                     </li>
                     <li class="mb-2">
-                        <a href="/calculator/percentage" class="hover:underline"
-                            >Mortgage Calculator</a
+                        <router-link to="/calculator/percentage" class="hover:underline"
+                            >Mortgage Calculator</router-link
                         >
                     </li>
                 </ul>
@@ -25,16 +27,18 @@
                 <h2 class="app-footer__title">Randomizers</h2>
                 <ul>
                     <li class="mb-2">
-                        <a href="/calculator/percentage" class="hover:underline"
-                            >Percentage Calculator</a
+                        <router-link to="/calculator/percentage" class="hover:underline"
+                            >Percentage Calculator</router-link
                         >
                     </li>
                     <li class="mb-2">
-                        <a href="/calculator/percentage" class="hover:underline">BMI Calculator</a>
+                        <router-link to="/calculator/percentage" class="hover:underline"
+                            >BMI Calculator</router-link
+                        >
                     </li>
                     <li class="mb-2">
-                        <a href="/calculator/percentage" class="hover:underline"
-                            >Mortgage Calculator</a
+                        <router-link to="/calculator/percentage" class="hover:underline"
+                            >Mortgage Calculator</router-link
                         >
                     </li>
                 </ul>

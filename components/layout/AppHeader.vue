@@ -47,134 +47,160 @@ const items = ref([
         items: [
             [
                 {
-                    label: 'Mathematical',
+                    label: 'Finance & Money',
+                    category: 'finance',
                     items: [
                         {
                             label: 'Percentage',
                             icon: 'pi pi-percentage',
                             route: '/calculator/percentage',
+                            category: 'finance',
                         },
-                    ],
-                },
-            ],
-            [
-                {
-                    label: 'Health',
-                    items: [
                         {
-                            label: 'BMI',
-                            icon: 'pi pi-chart-bar',
-                            route: '/calculator/bmi',
+                            label: 'Loan',
+                            icon: 'pi pi-credit-card',
+                            route: '/calculator/loan',
+                            category: 'finance',
                         },
-                    ],
-                },
-            ],
-            [
-                {
-                    label: 'Financial',
-                    items: [
                         {
                             label: 'Mortgage',
                             icon: 'pi pi-home',
                             route: '/calculator/mortgage',
+                            category: 'finance',
+                        },
+                        {
+                            label: 'Investment',
+                            icon: 'pi pi-chart-line',
+                            route: '/calculator/investment',
+                            category: 'finance',
+                        },
+                    ],
+                },
+            ],
+            [
+                {
+                    label: 'Health & Fitness',
+                    category: 'health',
+                    items: [
+                        {
+                            label: 'BMI',
+                            icon: 'pi pi-user',
+                            route: '/calculator/bmi',
+                            category: 'health',
+                        },
+                        {
+                            label: 'Calories',
+                            icon: 'pi pi-chart-bar',
+                            route: '/calculator/calories',
+                            category: 'health',
+                        },
+                        {
+                            label: 'Heart Rate',
+                            icon: 'pi pi-heart',
+                            route: '/calculator/heart-rate',
+                            category: 'health',
+                        },
+                        {
+                            label: 'Body Fat',
+                            icon: 'pi pi-percentage',
+                            route: '/calculator/body-fat',
+                            category: 'health',
+                        },
+                    ],
+                },
+            ],
+            [
+                {
+                    label: 'Math & Science',
+                    category: 'math',
+                    items: [
+                        {
+                            label: 'Statistics',
+                            icon: 'pi pi-chart-pie',
+                            route: '/calculator/statistics',
+                            category: 'math',
+                        },
+                        {
+                            label: 'Basic Math',
+                            icon: 'pi pi-calculator',
+                            route: '/calculator/basic-math',
+                            category: 'math',
+                        },
+                        {
+                            label: 'Geometry',
+                            icon: 'pi pi-th-large',
+                            route: '/calculator/geometry',
+                            category: 'math',
+                        },
+                        {
+                            label: 'Volume',
+                            icon: 'pi pi-box',
+                            route: '/calculator/volume',
+                            category: 'math',
                         },
                     ],
                 },
             ],
         ],
     },
-    // {
-    //     label: 'Randomizers',
-    //     icon: 'pi pi-sync',
-    //     items: [
-    //         [
-    //             {
-    //                 label: 'Basic',
-    //                 items: [
-    //                     {
-    //                         label: 'Addition',
-    //                         icon: 'pi pi-plus',
-    //                         route: '/calculator/basic/addition',
-    //                     },
-    //                     {
-    //                         label: 'Subtraction',
-    //                         icon: 'pi pi-minus',
-    //                         route: '/calculator/basic/subtraction',
-    //                     },
-    //                     {
-    //                         label: 'Multiplication',
-    //                         icon: 'pi pi-times',
-    //                         route: '/calculator/basic/multiplication',
-    //                     },
-    //                     {
-    //                         label: 'Division',
-    //                         icon: 'pi pi-divide',
-    //                         route: '/calculator/basic/division',
-    //                     },
-    //                 ],
-    //             },
-    //         ],
-    //         [
-    //             {
-    //                 label: 'Mathematical',
-    //                 items: [
-    //                     {
-    //                         label: 'Percentage',
-    //                         icon: 'pi pi-percentage',
-    //                         route: '/calculator/percentage',
-    //                     },
-    //                     {
-    //                         label: 'Square Root',
-    //                         icon: 'pi pi-square-root',
-    //                         route: '/calculator/square-root',
-    //                     },
-    //                     {
-    //                         label: 'Cube Root',
-    //                         icon: 'pi pi-cube',
-    //                         route: '/calculator/cube-root',
-    //                     },
-    //                 ],
-    //             },
-    //         ],
-    //         [
-    //             {
-    //                 label: 'Health',
-    //                 items: [
-    //                     {
-    //                         label: 'BMI',
-    //                         icon: 'pi pi-chart-bar',
-    //                         route: '/calculator/bmi',
-    //                     },
-    //                 ],
-    //             },
-    //         ],
-    //         [
-    //             {
-    //                 label: 'Utility',
-    //                 items: [
-    //                     {
-    //                         label: 'Mortgage',
-    //                         icon: 'pi pi-home',
-    //                         route: '/calculator/mortgage',
-    //                     },
-    //                 ],
-    //             },
-    //         ],
-    //     ],
-    // },
+    {
+        label: 'Randomizers',
+        icon: 'pi pi-sync',
+        items: [
+            [
+                {
+                    label: 'Numbers',
+                    items: [
+                        {
+                            label: 'Number Generator',
+                            icon: 'pi pi-hashtag',
+                            route: '/randomizer/number',
+                        },
+                        {
+                            label: 'Dice Roll',
+                            icon: 'pi pi-stop',
+                            route: '/randomizer/dice',
+                        },
+                        {
+                            label: 'Coin Flip',
+                            icon: 'pi pi-circle',
+                            route: '/randomizer/coin',
+                        },
+                    ],
+                },
+            ],
+            [
+                {
+                    label: 'Text',
+                    items: [
+                        {
+                            label: 'Password',
+                            icon: 'pi pi-key',
+                            route: '/randomizer/password',
+                        },
+                        {
+                            label: 'Lorem Ipsum',
+                            icon: 'pi pi-align-left',
+                            route: '/randomizer/lorem-ipsum',
+                        },
+                    ],
+                },
+            ],
+        ],
+    },
 ]);
 </script>
 
 <style lang="scss">
 .app-header {
-    @apply relative bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300;
+    @apply relative;
 
     &-container {
         @apply py-3 container mx-auto;
     }
 
     &-nav {
-        @apply lg:justify-between;
+        @apply lg:justify-between gap-8;
     }
 
     &__title {
@@ -185,6 +211,12 @@ const items = ref([
     .p-megamenu {
         @apply border-none bg-transparent;
 
+        .p-megamenu-root-list {
+            @media (min-width: 961px) {
+                @apply w-full gap-4;
+            }
+        }
+
         &-start {
             @apply w-full;
             @media (min-width: 961px) {
@@ -193,7 +225,10 @@ const items = ref([
         }
 
         &-end {
-            @apply flex ml-0 gap-4;
+            @apply hidden ml-0 gap-4;
+            @media (min-width: 961px) {
+                @apply flex;
+            }
         }
 
         &-button {
