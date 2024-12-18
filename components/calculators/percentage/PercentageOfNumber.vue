@@ -1,53 +1,19 @@
 <template>
     <CalculatorBase
-        title="Percentage of a Number"
-        :result="result"
-        @calculate="calculatePercentage"
+        color="emerald"
+        icon="calculator"
+        title="Percentage Calculator"
+        :explanation="explanation"
     >
-        <div>
-            <label for="percentage" class="block font-semibold">Percentage Value</label>
-            <InputGroup class="mt-2">
-                <InputNumber
-                    id="percentage"
-                    v-model="percentage"
-                    placeholder="Enter a percentage value"
-                    :minFractionDigits="0"
-                    :maxFractionDigits="2"
-                    :useGrouping="false"
-                />
-                <InputGroupAddon>%</InputGroupAddon>
-            </InputGroup>
-        </div>
-        <div>
-            <label for="number" class="block font-semibold">Number</label>
-            <InputGroup class="mt-2">
-                <InputNumber
-                    id="number"
-                    v-model="number"
-                    placeholder="Enter a number"
-                    :minFractionDigits="0"
-                    :maxFractionDigits="5"
-                    :useGrouping="false"
-                />
-            </InputGroup>
-        </div>
     </CalculatorBase>
 </template>
 
 <script setup>
-import { ref } from 'vue';
 import CalculatorBase from '~/components/calculators/CalculatorBase.vue';
-
-const number = ref(null);
-const percentage = ref(null);
-const result = ref(null);
-
-const calculatePercentage = () => {
-    if (number.value !== null && percentage.value !== null) {
-        let _result = (number.value * (percentage.value / 100)).toFixed(2);
-        result.value = parseFloat(_result).toString();
-    } else {
-        result.value = null;
-    }
-};
+const explanation = `
+To calculate a percentage of a number:<br />
+1. Multiply the number by the percentage<br />
+2. Divide by 100<br />
+Formula: (Percentage × Number) ÷ 100
+`;
 </script>
