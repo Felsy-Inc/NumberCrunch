@@ -8,10 +8,11 @@
                     </RouterLink>
                 </template>
                 <template #item="{ item, props, hasSubmenu }">
+                    <!-- :to="item.route" -->
                     <RouterLink
                         v-if="item.route"
                         v-slot="{ href, navigate }"
-                        :to="item.route"
+                        to="/calculator/percentage"
                         custom
                     >
                         <a v-ripple :href="href" v-bind="props.action" @click="navigate">

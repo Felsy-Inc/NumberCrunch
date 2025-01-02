@@ -39,10 +39,11 @@
                     </div>
 
                     <div class="calculator__grid">
+                        <!-- :to="`/calculator/${calc.title.toLowerCase().replace(/\s+/g, '-')}`" -->
                         <router-link
                             v-for="calc in getFilteredCalculators(category)"
                             :key="calc.title"
-                            :to="`/calculator/${calc.title.toLowerCase().replace(/\s+/g, '-')}`"
+                            to="/calculator/percentage"
                             class="calculator__card"
                             :class="`calculator__card--${category.color}`"
                         >

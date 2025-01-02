@@ -1,9 +1,11 @@
 <template>
-    <Card class="calculator-base">
+    <Card class="calculator-base" :class="`calculator-base--${color}`">
         <template #header>
             <section class="calculator-base__header">
-                <i class="calculator-base__icon pi pi-calculator"></i>
-                Percentage Calculator
+                <div class="calculator-base__icon-container">
+                    <i class="calculator-base__icon pi" :class="`pi-${icon}`"></i>
+                </div>
+                {{ title }}
             </section>
         </template>
 
@@ -17,7 +19,7 @@
                             <InputNumber
                                 v-model="percentage"
                                 :min="0"
-                                :max="100"
+                                :max="1000000"
                                 placeholder="Enter percentage"
                                 class="calculator-base__input"
                             />
@@ -81,9 +83,7 @@
                         <div class="calculator-base__result-container">
                             <div>
                                 <h3 class="calculator-base__result-title">Result</h3>
-                                <p class="calculator-base__result-value">
-                                    {{ formatNumber(result) }}
-                                </p>
+                                <p class="calculator-base__result-value">{{ formattedResult }}</p>
                                 <p class="calculator-base__result-formula">
                                     {{ percentage }}% of {{ formatNumber(number) }} =
                                     {{ formatNumber(result) }}
@@ -104,9 +104,7 @@
                             <i class="calculator-base__help-icon pi pi-info-circle"></i>
                             <div>
                                 <h3 class="calculator-base__help-title">How it works</h3>
-                                <p class="calculator-base__help-text">
-                                    <span v-html="explanation"></span>
-                                </p>
+                                <p class="calculator-base__help-text" v-html="explanation"></p>
                             </div>
                         </div>
                     </div>
@@ -139,9 +137,21 @@ import InputNumber from 'primevue/inputnumber';
 import Message from 'primevue/message';
 
 const props = defineProps({
+    title: {
+        type: String,
+        required: true,
+    },
     explanation: {
         type: String,
         required: true,
+    },
+    icon: {
+        type: String,
+        default: 'calculator',
+    },
+    color: {
+        type: String,
+        default: 'primary',
     },
 });
 
@@ -153,11 +163,9 @@ const history = ref([]);
 
 const commonPercentages = [25, 50, 75, 100];
 
-const canCalculate = computed(() => percentage.value !== null && number.value !== null);
+const canCalculate = computed(() => Boolean(percentage.value) && Boolean(number.value));
 
-const formatNumber = (num) => {
-    return new Intl.NumberFormat().format(num);
-};
+const formatNumber = (num) => new Intl.NumberFormat().format(num);
 
 const calculate = () => {
     error.value = '';
@@ -196,11 +204,15 @@ const copyResult = () => {
 
     // Header
     &__header {
-        @apply text-2xl font-bold flex items-center gap-2 border-b border-gray-200 dark:border-gray-700 p-4 text-gray-900 dark:text-white;
+        @apply text-2xl font-bold flex items-center gap-4 border-b border-gray-200 dark:border-gray-700 p-4 text-gray-900 dark:text-white;
+    }
+
+    &__icon-container {
+        @apply h-10 w-10 bg-primary-600 dark:bg-primary-500 rounded flex items-center justify-center;
     }
 
     &__icon {
-        @apply text-xl text-primary-600 dark:text-primary-400;
+        @apply text-xl text-white;
     }
 
     // Layout
@@ -223,14 +235,6 @@ const copyResult = () => {
 
     &__input {
         @apply w-full;
-
-        .p-inputnumber-input {
-            @apply bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white transition-colors;
-
-            &:focus {
-                @apply border-primary-500 ring-2 ring-primary-200 dark:ring-primary-800;
-            }
-        }
     }
 
     &__percentage-symbol {
@@ -289,27 +293,27 @@ const copyResult = () => {
 
     // Help Section
     &__help {
-        @apply mt-4 p-4 bg-white dark:bg-gray-800 rounded-lg shadow-md transition-all border border-gray-200 dark:border-gray-700;
-
-        &:hover {
-            @apply shadow-lg;
-        }
+        @apply mt-6 rounded-lg border border-gray-200 dark:border-gray-700 p-4 bg-gray-50/50 dark:bg-gray-800/30;
     }
 
     &__help-container {
-        @apply flex items-start gap-2;
+        @apply flex items-start gap-3;
     }
 
     &__help-icon {
-        @apply text-primary-600 dark:text-primary-400 mt-1;
+        @apply text-base text-primary-600 dark:text-primary-400;
     }
 
     &__help-title {
-        @apply font-medium text-gray-900 dark:text-white;
+        @apply text-base font-semibold text-gray-900 dark:text-white mb-1.5;
     }
 
     &__help-text {
         @apply text-sm text-gray-600 dark:text-gray-400 leading-relaxed;
+
+        ::v-deep(strong) {
+            @apply text-gray-900 dark:text-white font-medium;
+        }
     }
 
     // History Section

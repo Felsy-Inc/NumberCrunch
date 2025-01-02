@@ -1,8 +1,8 @@
 <template>
     <CalculatorBase
         color="emerald"
-        icon="calculator"
-        title="Percentage Calculator"
+        icon="percentage"
+        title="Percentage of a number"
         :explanation="explanation"
     >
     </CalculatorBase>

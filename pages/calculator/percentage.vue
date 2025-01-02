@@ -2,12 +2,12 @@
     <main class="percentage-page">
         <!-- <h1 class="percentage-page__title">Percentage Calculators</h1> -->
         <PercentageOfNumber />
-        <HorizontalLargeAd />
+        <!-- <HorizontalLargeAd /> -->
     </main>
 </template>
 
 <script setup>
-import HorizontalLargeAd from '~/components/ads/HorizontalLargeAd.vue';
+// import HorizontalLargeAd from '~/components/ads/HorizontalLargeAd.vue';
 import PercentageOfNumber from '~/components/calculators/percentage/PercentageOfNumber.vue';
 </script>
 
