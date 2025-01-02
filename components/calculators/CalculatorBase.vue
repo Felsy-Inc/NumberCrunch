@@ -83,7 +83,9 @@
                         <div class="calculator-base__result-container">
                             <div>
                                 <h3 class="calculator-base__result-title">Result</h3>
-                                <p class="calculator-base__result-value">{{ formattedResult }}</p>
+                                <p class="calculator-base__result-value">
+                                    {{ formatNumber(result) }}
+                                </p>
                                 <p class="calculator-base__result-formula">
                                     {{ percentage }}% of {{ formatNumber(number) }} =
                                     {{ formatNumber(result) }}
@@ -130,7 +132,8 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { updatePrimaryPalette } from '@primevue/themes';
+import { ref, computed, watch } from 'vue';
 import Card from 'primevue/card';
 import Button from 'primevue/button';
 import InputNumber from 'primevue/inputnumber';
@@ -154,6 +157,32 @@ const props = defineProps({
         default: 'primary',
     },
 });
+
+const updateTheme = (color) => {
+    updatePrimaryPalette({
+        50: `{${color}.50}`,
+        100: `{${color}.100}`,
+        200: `{${color}.200}`,
+        300: `{${color}.300}`,
+        400: `{${color}.400}`,
+        500: `{${color}.500}`,
+        600: `{${color}.600}`,
+        700: `{${color}.700}`,
+        800: `{${color}.800}`,
+        900: `{${color}.900}`,
+        950: `{${color}.950}`,
+    });
+};
+
+watch(
+    () => props.color,
+    (newColor) => {
+        if (newColor) {
+            updateTheme(newColor);
+        }
+    },
+    { immediate: true }
+);
 
 const percentage = ref(null);
 const number = ref(null);
@@ -189,6 +218,19 @@ const clear = () => {
     number.value = null;
     result.value = null;
     error.value = '';
+    updatePrimaryPalette({
+        50: `{${props.color}.50}`,
+        100: `{${props.color}.100}`,
+        200: `{${props.color}.200}`,
+        300: `{${props.color}.300}`,
+        400: `{${props.color}.400}`,
+        500: `{${props.color}.500}`,
+        600: `{${props.color}.600}`,
+        700: `{${props.color}.700}`,
+        800: `{${props.color}.800}`,
+        900: `{${props.color}.900}`,
+        950: `{${props.color}.950}`,
+    });
 };
 
 const copyResult = () => {
@@ -201,6 +243,35 @@ const copyResult = () => {
 <style lang="scss">
 .calculator-base {
     @apply max-w-3xl mx-auto bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700;
+
+    // Theme overwrites
+    &--emerald {
+        .calculator-base {
+            &__icon-container {
+                @apply bg-emerald-600 dark:bg-emerald-500;
+            }
+            &__result-value {
+                @apply text-emerald-600 dark:text-emerald-400;
+            }
+            &__help-icon {
+                @apply text-emerald-600 dark:text-emerald-400;
+            }
+        }
+    }
+
+    &--rose {
+        .calculator-base {
+            &__icon-container {
+                @apply bg-rose-600 dark:bg-rose-500;
+            }
+            &__result-value {
+                @apply text-rose-600 dark:text-rose-400;
+            }
+            &__help-icon {
+                @apply text-rose-600 dark:text-rose-400;
+            }
+        }
+    }
 
     // Header
     &__header {
