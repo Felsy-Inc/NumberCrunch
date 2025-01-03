@@ -1,4 +1,5 @@
 <template>
+    <Toast />
     <Card class="calculator-base" :class="`calculator-base--${color}`">
         <template #header>
             <section class="calculator-base__header">
@@ -13,63 +14,7 @@
             <section class="calculator-base__content">
                 <!-- Input Section -->
                 <div class="calculator-base__content-left">
-                    <div>
-                        <label class="calculator-base__label">Percentage Value</label>
-                        <div class="calculator-base__input-wrapper">
-                            <InputNumber
-                                v-model="percentage"
-                                :min="0"
-                                :max="1000000"
-                                placeholder="Enter percentage"
-                                class="calculator-base__input"
-                            />
-                            <span class="calculator-base__percentage-symbol">%</span>
-                        </div>
-                    </div>
-
-                    <div>
-                        <label class="calculator-base__label">Number</label>
-                        <InputNumber
-                            v-model="number"
-                            placeholder="Enter number"
-                            class="calculator-base__input"
-                        />
-                    </div>
-
-                    <!-- Common Percentages -->
-                    <div class="calculator-base__percentage-buttons">
-                        <Button
-                            v-for="p in commonPercentages"
-                            :key="p"
-                            @click="percentage = p"
-                            class="p-button-outlined"
-                            :title="`Set percentage value to ${p}%`"
-                        >
-                            {{ p }}%
-                        </Button>
-                    </div>
-
-                    <!-- Action Buttons -->
-                    <div class="calculator-base__action-buttons">
-                        <Button
-                            @click="calculate"
-                            class="calculator-base__calculate-btn"
-                            :disabled="!canCalculate"
-                        >
-                            Calculate
-                            <i class="calculator-base__arrow-icon pi pi-arrow-right"></i>
-                        </Button>
-                        <Button
-                            @click="clear"
-                            icon="pi pi-refresh"
-                            class="p-button-secondary"
-                            title="Reset"
-                        />
-                    </div>
-                </div>
-
-                <!-- Result Section -->
-                <div class="calculator-base__content-right">
+                    <slot name="content"></slot>
                     <!-- Error Display -->
                     <Message
                         v-if="error"
@@ -77,25 +22,45 @@
                         :closable="false"
                         class="calculator-base__error"
                     />
+                    <!-- Action Buttons -->
+                    <div class="calculator-base__action-buttons">
+                        <Button
+                            @click="$emit('calculate')"
+                            class="calculator-base__calculate-btn"
+                            :disabled="!canCalculate"
+                        >
+                            Calculate
+                            <i class="calculator-base__arrow-icon pi pi-arrow-right"></i>
+                        </Button>
+                        <Button
+                            @click="$emit('clear')"
+                            icon="pi pi-refresh"
+                            class="p-button-outlined"
+                            severity="secondary"
+                            title="Reset"
+                        />
+                    </div>
+                </div>
 
+                <!-- Result Section -->
+                <div class="calculator-base__content-right">
                     <!-- Result Display -->
                     <div v-if="result !== null" class="calculator-base__result">
                         <div class="calculator-base__result-container">
                             <div>
                                 <h3 class="calculator-base__result-title">Result</h3>
                                 <p class="calculator-base__result-value">
-                                    {{ formatNumber(result) }}
+                                    {{ result }}
                                 </p>
                                 <p class="calculator-base__result-formula">
-                                    {{ percentage }}% of {{ formatNumber(number) }} =
-                                    {{ formatNumber(result) }}
+                                    {{ resultFormula }}
                                 </p>
                             </div>
                             <Button
-                                @click="copyResult"
-                                icon="pi pi-copy"
-                                class="p-button-text"
+                                class="p-button-outlined"
                                 title="Copy result"
+                                icon="pi pi-copy"
+                                @click="copyResult"
                             />
                         </div>
                     </div>
@@ -120,8 +85,7 @@
                                 :key="index"
                                 class="calculator-base__history-item"
                             >
-                                {{ item.percentage }}% of {{ formatNumber(item.number) }} =
-                                {{ formatNumber(item.result) }}
+                                {{ item }}
                             </div>
                         </div>
                     </div>
@@ -133,13 +97,22 @@
 
 <script setup>
 import { updatePrimaryPalette } from '@primevue/themes';
-import { ref, computed, watch } from 'vue';
+import { watch } from 'vue';
 import Card from 'primevue/card';
 import Button from 'primevue/button';
-import InputNumber from 'primevue/inputnumber';
 import Message from 'primevue/message';
+import { useToast } from 'primevue/usetoast';
+import Toast from 'primevue/toast';
 
 const props = defineProps({
+    color: {
+        type: String,
+        default: 'primary',
+    },
+    icon: {
+        type: String,
+        default: 'calculator',
+    },
     title: {
         type: String,
         required: true,
@@ -148,13 +121,25 @@ const props = defineProps({
         type: String,
         required: true,
     },
-    icon: {
-        type: String,
-        default: 'calculator',
+    canCalculate: {
+        type: Boolean,
+        default: false,
     },
-    color: {
+    result: {
         type: String,
-        default: 'primary',
+        default: null,
+    },
+    resultFormula: {
+        type: String,
+        default: null,
+    },
+    history: {
+        type: Array,
+        default: [],
+    },
+    error: {
+        type: String,
+        default: '',
     },
 });
 
@@ -184,58 +169,26 @@ watch(
     { immediate: true }
 );
 
-const percentage = ref(null);
-const number = ref(null);
-const result = ref(null);
-const error = ref('');
-const history = ref([]);
+const toast = useToast();
 
-const commonPercentages = [25, 50, 75, 100];
-
-const canCalculate = computed(() => Boolean(percentage.value) && Boolean(number.value));
-
-const formatNumber = (num) => new Intl.NumberFormat().format(num);
-
-const calculate = () => {
-    error.value = '';
-
-    if (!canCalculate.value) {
-        error.value = 'Please fill in both fields';
-        return;
-    }
-
-    const calculatedResult = (percentage.value * number.value) / 100;
-    result.value = calculatedResult;
-
-    history.value = [
-        { percentage: percentage.value, number: number.value, result: calculatedResult },
-        ...history.value.slice(0, 4),
-    ];
-};
-
-const clear = () => {
-    percentage.value = null;
-    number.value = null;
-    result.value = null;
-    error.value = '';
-    updatePrimaryPalette({
-        50: `{${props.color}.50}`,
-        100: `{${props.color}.100}`,
-        200: `{${props.color}.200}`,
-        300: `{${props.color}.300}`,
-        400: `{${props.color}.400}`,
-        500: `{${props.color}.500}`,
-        600: `{${props.color}.600}`,
-        700: `{${props.color}.700}`,
-        800: `{${props.color}.800}`,
-        900: `{${props.color}.900}`,
-        950: `{${props.color}.950}`,
-    });
-};
-
-const copyResult = () => {
-    if (result.value !== null) {
-        navigator.clipboard.writeText(result.value.toString());
+const copyResult = async () => {
+    if (props.result !== null) {
+        try {
+            await navigator.clipboard.writeText(props.result.toString());
+            toast.add({
+                severity: 'success',
+                summary: 'Copied!',
+                detail: 'Result copied to clipboard',
+                life: 3000,
+            });
+        } catch (err) {
+            toast.add({
+                severity: 'error',
+                summary: 'Error',
+                detail: 'Failed to copy to clipboard',
+                life: 3000,
+            });
+        }
     }
 };
 </script>
@@ -339,11 +292,7 @@ const copyResult = () => {
     }
 
     &__result {
-        @apply p-4 bg-white dark:bg-gray-800 rounded-lg shadow-md transition-all border border-gray-200 dark:border-gray-700;
-
-        &:hover {
-            @apply shadow-lg;
-        }
+        @apply p-4 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700;
     }
 
     &__result-container {
@@ -401,10 +350,10 @@ const copyResult = () => {
     }
 
     &__history-item {
-        @apply text-sm text-gray-600 dark:text-gray-400 p-2 bg-white dark:bg-gray-800 rounded-lg shadow-md transition-all border border-gray-200 dark:border-gray-700;
+        @apply text-sm text-gray-600 dark:text-gray-400 p-2 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700;
 
         &:hover {
-            @apply shadow-lg bg-gray-50 dark:bg-gray-700;
+            @apply bg-gray-50 dark:bg-gray-700;
         }
     }
 
