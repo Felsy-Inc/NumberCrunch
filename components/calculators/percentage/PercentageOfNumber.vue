@@ -54,7 +54,6 @@
 <script setup>
 import CalculatorBase from '~/components/calculators/CalculatorBase.vue';
 import { ref } from 'vue';
-import InputNumber from 'primevue/inputnumber';
 
 // Meta
 const explanation = `

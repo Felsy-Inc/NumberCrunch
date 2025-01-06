@@ -57,7 +57,7 @@
                                 </p>
                             </div>
                             <Button
-                                class="p-button-outlined"
+                                class="p-button-outlined flex-shrink-0"
                                 title="Copy result"
                                 icon="pi pi-copy"
                                 @click="copyResult"
@@ -261,6 +261,10 @@ const copyResult = async () => {
         @apply w-full;
     }
 
+    &__radio-group {
+        @apply flex items-center gap-2 mb-2;
+    }
+
     &__percentage-symbol {
         @apply absolute right-3 top-2 text-gray-500 dark:text-gray-400;
     }
@@ -296,7 +300,7 @@ const copyResult = async () => {
     }
 
     &__result-container {
-        @apply flex justify-between items-center;
+        @apply flex justify-between items-center gap-2;
     }
 
     &__result-title {
