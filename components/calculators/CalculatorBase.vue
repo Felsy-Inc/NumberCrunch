@@ -71,7 +71,10 @@
                             <i class="calculator-base__help-icon pi pi-info-circle"></i>
                             <div>
                                 <h3 class="calculator-base__help-title">How it works</h3>
-                                <p class="calculator-base__help-text" v-html="explanation"></p>
+                                <section
+                                    class="calculator-base__help-text"
+                                    v-html="explanation"
+                                ></section>
                             </div>
                         </div>
                     </div>
@@ -103,6 +106,8 @@ import Button from 'primevue/button';
 import Message from 'primevue/message';
 import { useToast } from 'primevue/usetoast';
 import Toast from 'primevue/toast';
+
+const emit = defineEmits(['calculate', 'clear']);
 
 const props = defineProps({
     color: {
@@ -179,7 +184,7 @@ const copyResult = async () => {
                 severity: 'success',
                 summary: 'Copied!',
                 detail: 'Result copied to clipboard',
-                life: 3000,
+                life: 300000,
             });
         } catch (err) {
             toast.add({
@@ -333,10 +338,42 @@ const copyResult = async () => {
     }
 
     &__help-text {
-        @apply text-sm text-gray-600 dark:text-gray-400 leading-relaxed;
+        @apply text-sm text-gray-600 dark:text-gray-300 leading-relaxed;
 
-        ::v-deep(strong) {
-            @apply text-gray-900 dark:text-white font-medium;
+        .formula {
+            @apply bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg p-4;
+        }
+
+        p {
+            @apply mb-4;
+        }
+
+        ol,
+        ul {
+            @apply mb-4 pl-5;
+        }
+
+        li {
+            @apply mb-2;
+        }
+
+        ol {
+            @apply list-decimal;
+        }
+
+        ul {
+            @apply list-disc;
+
+            li {
+                @apply mb-1;
+            }
+        }
+
+        mfrac {
+            mi,
+            mo {
+                @apply text-xs;
+            }
         }
     }
 

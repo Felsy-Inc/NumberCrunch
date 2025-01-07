@@ -379,7 +379,7 @@ const hasResults = computed(() => {
     &__card {
         @apply block w-full rounded-lg p-6
            relative overflow-hidden
-           bg-white border border-gray-100
+           bg-white border border-gray-200
            transition-all duration-300
            no-underline outline-none
            dark:bg-gray-800 dark:border-gray-700;
@@ -403,100 +403,71 @@ const hasResults = computed(() => {
             }
         }
 
+        // Color-specific hover and focus states
+        &--emerald:not(&--disabled) {
+            &:hover {
+                @apply border-emerald-200 bg-emerald-50/50
+             dark:bg-emerald-900/10 dark:border-emerald-700/50;
+
+                .calculator__icon-wrapper {
+                    @apply shadow-md shadow-emerald-200/50
+               dark:shadow-emerald-900/30;
+                }
+            }
+
+            &:focus {
+                @apply ring-2 ring-emerald-400/50 border-emerald-400
+             dark:ring-emerald-500/50 dark:border-emerald-500;
+            }
+        }
+
+        &--rose:not(&--disabled) {
+            &:hover {
+                @apply border-rose-200 bg-rose-50/50
+             dark:bg-rose-900/10 dark:border-rose-700/50;
+
+                .calculator__icon-wrapper {
+                    @apply shadow-md shadow-rose-200/50
+               dark:shadow-rose-900/30;
+                }
+            }
+
+            &:focus {
+                @apply ring-2 ring-rose-400/50 border-rose-400
+             dark:ring-rose-500/50 dark:border-rose-500;
+            }
+        }
+
+        &--primary:not(&--disabled) {
+            &:hover {
+                @apply border-blue-200 bg-blue-50/50
+             dark:bg-blue-900/10 dark:border-blue-700/50;
+
+                .calculator__icon-wrapper {
+                    @apply shadow-md shadow-blue-200/50
+               dark:shadow-blue-900/30;
+                }
+            }
+
+            &:focus {
+                @apply ring-2 ring-blue-400/50 border-blue-400
+             dark:ring-blue-500/50 dark:border-blue-500;
+            }
+        }
+
         &--disabled {
-            @apply cursor-not-allowed opacity-75;
+            @apply cursor-not-allowed;
 
             &:hover {
                 @apply transform-none;
+
+                &::before {
+                    @apply opacity-0;
+                }
             }
-        }
-    }
 
-    // Color-specific hover and focus states
-    &__card--emerald {
-        &:hover {
-            @apply border-emerald-200 bg-emerald-50/50
-             dark:bg-emerald-900/10 dark:border-emerald-700/50;
-
-            .calculator__icon-wrapper {
-                @apply shadow-md shadow-emerald-200/50
-               dark:shadow-emerald-900/30;
-            }
-        }
-
-        &:focus {
-            @apply ring-2 ring-emerald-400/50 border-emerald-400
-             dark:ring-emerald-500/50 dark:border-emerald-500;
-        }
-    }
-
-    &__card--rose {
-        &:hover {
-            @apply border-rose-200 bg-rose-50/50
-             dark:bg-rose-900/10 dark:border-rose-700/50;
-
-            .calculator__icon-wrapper {
-                @apply shadow-md shadow-rose-200/50
-               dark:shadow-rose-900/30;
-            }
-        }
-
-        &:focus {
-            @apply ring-2 ring-rose-400/50 border-rose-400
-             dark:ring-rose-500/50 dark:border-rose-500;
-        }
-    }
-
-    &__card--primary {
-        &:hover {
-            @apply border-blue-200 bg-blue-50/50
-             dark:bg-blue-900/10 dark:border-blue-700/50;
-
-            .calculator__icon-wrapper {
-                @apply shadow-md shadow-blue-200/50
-               dark:shadow-blue-900/30;
-            }
-        }
-
-        &:focus {
-            @apply ring-2 ring-blue-400/50 border-blue-400
-             dark:ring-blue-500/50 dark:border-blue-500;
-        }
-    }
-
-    // Color-specific hover states
-    &__card--emerald {
-        &:hover {
-            @apply border-emerald-200 bg-emerald-50/50
-             dark:bg-emerald-900/10 dark:border-emerald-700/50;
-
-            .calculator__icon-wrapper {
-                @apply shadow-md shadow-emerald-200/50
-               dark:shadow-emerald-900/30;
-            }
-        }
-    }
-
-    &__card--rose {
-        &:hover {
-            @apply border-rose-200 bg-rose-50/50
-             dark:bg-rose-900/10 dark:border-rose-700/50;
-
-            .calculator__icon-wrapper {
-                @apply shadow-md shadow-rose-200/50
-               dark:shadow-rose-900/30;
-            }
-        }
-    }
-
-    &__card--primary {
-        &:hover {
-            @apply border-blue-200 bg-blue-50/50
-             dark:bg-blue-900/10 dark:border-blue-700/50;
-
-            .calculator__icon-wrapper {
-                @apply shadow-md shadow-blue-200/50
-               dark:shadow-blue-900/30;
+            .calculator__card-content {
+                @apply opacity-50 dark:opacity-10;
             }
         }
     }

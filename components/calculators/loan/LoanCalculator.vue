@@ -14,7 +14,7 @@
         <template #content>
             <div>
                 <label class="calculator-base__label">Currency</label>
-                <Dropdown
+                <Select
                     v-model="selectedCurrency"
                     :options="currencies"
                     optionLabel="label"
@@ -90,15 +90,47 @@ import { ref, computed, watch } from 'vue';
 
 // Meta
 const explanation = `
-To calculate monthly loan payments:<br />
-1. Convert annual interest rate to monthly (divide by 12 and 100)<br />
-2. Convert loan term to months (multiply by 12)<br />
-3. Use the formula: P = L[c(1 + c)^n]/[(1 + c)^n - 1]<br />
-Where:<br />
-P = Monthly Payment<br />
-L = Loan Amount<br />
-c = Monthly Interest Rate<br />
-n = Total Number of Months
+<p>To calculate monthly loan payments:</p>
+<ol>
+    <li>Convert annual interest rate to monthly (divide by 12 and 100)</li>
+    <li>Convert loan term to months (multiply by 12)</li>
+    <li>Use the formula:</li>
+    <p class="formula">
+    <math>
+        <mrow>
+            <mi>P</mi>
+            <mo>=</mo>
+            <mi>L</mi>
+            <mo>[</mo>
+            <mi>c</mi>
+            <mo>(</mo>
+            <mn>1</mn>
+            <mo>+</mo>
+            <mi>c</mi>
+            <mo>)</mo>
+            <mi>n</mi>
+            <mo>]</mo>
+            <mo>/</mo>
+            <mo>[</mo>
+            <mo>(</mo>
+            <mn>1</mn>
+            <mo>+</mo>
+            <mi>c</mi>
+            <mo>)</mo>
+            <mi>n</mi>
+            <mo>-</mo>
+            <mn>1</mn>
+            <mo>]</mo>
+        </mrow>
+    </math>
+</p>
+<p>
+    P = Monthly Payment<br>
+    L = Loan Amount<br>
+    c = Monthly Interest Rate<br>
+    n = Total Number of Months
+</p>
+</ol>
 `;
 
 // Calculator
@@ -160,11 +192,14 @@ const calculate = () => {
     ];
 };
 
-const formatCurrency = (num) =>
-    new Intl.NumberFormat('en-US', {
+const formatCurrency = (num) => {
+    // Get user's preferred locale from browser, fallback to 'en-US'
+    const userLocale = navigator.language || 'en-US';
+    return new Intl.NumberFormat(userLocale, {
         style: 'currency',
         currency: selectedCurrency.value,
     }).format(num);
+};
 
 const clear = () => {
     loanAmount.value = null;

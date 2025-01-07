@@ -57,10 +57,30 @@ import { ref } from 'vue';
 
 // Meta
 const explanation = `
-To calculate a percentage of a number:<br />
-1. Multiply the number by the percentage<br />
-2. Divide by 100<br />
-Formula: (Percentage × Number) ÷ 100
+<p>To calculate a percentage of a number:</p>
+<ol>
+    <li>Multiply the number by the percentage</li>
+    <li>Divide by 100</li>
+    <li>Use the formula:</li>
+    <p class="formula">
+    <math>
+        <mrow>
+            <mi>Result</mi>
+            <mo>=</mo>
+            <mfrac>
+                <mrow>
+                    <mi>Number</mi>
+                    <mo>x</mo>
+                    <mi>Percentage</mi>
+                </mrow>
+                <mrow>
+                    <mi>100</mi>
+                </mrow>
+            </mfrac>
+        </mrow>
+    </math>
+</p>
+</ol>
 `;
 
 // Calculator
