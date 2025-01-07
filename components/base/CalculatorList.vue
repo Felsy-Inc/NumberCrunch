@@ -42,9 +42,17 @@
                         <router-link
                             v-for="calc in getFilteredCalculators(category)"
                             :key="calc.title"
-                            :to="`/calculator/${calc.title.toLowerCase().replace(/\s+/g, '-')}`"
+                            :to="
+                                calc.enabled
+                                    ? `/calculator/${calc.title.toLowerCase().replace(/\s+/g, '-')}`
+                                    : ''
+                            "
                             class="calculator__card"
-                            :class="`calculator__card--${category.color}`"
+                            :class="[
+                                `calculator__card--${category.color}`,
+                                { 'calculator__card--disabled': !calc.enabled },
+                            ]"
+                            @click.prevent="!calc.enabled && $event.preventDefault()"
                         >
                             <div class="calculator__card-content">
                                 <div
@@ -61,6 +69,9 @@
                                         {{ calc.description }}
                                     </p>
                                 </div>
+                            </div>
+                            <div v-if="!calc.enabled" class="calculator__overlay">
+                                <span>Coming Soon</span>
                             </div>
                         </router-link>
                     </div>
@@ -91,41 +102,49 @@ const categories = [
                 title: 'Percentage',
                 icon: 'pi pi-percentage',
                 description: 'Find percentages, calculate tips, and determine ratios easily',
+                enabled: true,
             },
             {
                 title: 'Loan',
                 icon: 'pi pi-credit-card',
                 description: 'Calculate monthly payments, interest rates, and loan terms',
+                enabled: true,
             },
             {
                 title: 'Mortgage',
                 icon: 'pi pi-home',
                 description: 'Estimate mortgage payments and compare different loan options',
+                enabled: false,
             },
             {
                 title: 'Investment',
                 icon: 'pi pi-chart-line',
                 description: 'Calculate ROI, compound interest, and investment growth',
+                enabled: false,
             },
             {
                 title: 'Currency',
                 icon: 'pi pi-dollar',
                 description: 'Convert between different currencies with live rates',
+                enabled: false,
             },
             {
                 title: 'Tax',
                 icon: 'pi pi-file',
                 description: 'Calculate income tax, sales tax, and tax deductions',
+                enabled: false,
             },
             {
                 title: 'Business',
                 icon: 'pi pi-briefcase',
                 description: 'Profit margins, break-even analysis, and ROI calculator',
+                enabled: false,
             },
             {
                 title: 'Retail',
                 icon: 'pi pi-shopping-cart',
                 description: 'Calculate markups, discounts, and retail pricing',
+                enabled: false,
             },
         ],
     },
@@ -138,41 +157,49 @@ const categories = [
                 title: 'BMI',
                 icon: 'pi pi-user',
                 description: 'Calculate Body Mass Index and ideal weight range',
+                enabled: false,
             },
             {
                 title: 'Calories',
                 icon: 'pi pi-apple',
                 description: 'Track daily calories and calculate meal portions',
+                enabled: false,
             },
             {
                 title: 'Heart Rate',
                 icon: 'pi pi-heart',
                 description: 'Calculate target heart rate zones for different activities',
+                enabled: false,
             },
             {
                 title: 'Body Fat',
                 icon: 'pi pi-ruler',
                 description: 'Estimate body fat percentage using different methods',
+                enabled: false,
             },
             {
                 title: 'Pregnancy',
                 icon: 'pi pi-user-plus',
                 description: 'Calculate due date and track pregnancy milestones',
+                enabled: false,
             },
             {
                 title: 'Fitness Goals',
                 icon: 'pi pi-chart-bar',
                 description: 'Track progress and calculate workout targets',
+                enabled: false,
             },
             {
                 title: 'Health Stats',
                 icon: 'pi pi-chart-line',
                 description: 'Monitor vital statistics and health metrics',
+                enabled: false,
             },
             {
                 title: 'Timer',
                 icon: 'pi pi-clock',
                 description: 'Time workouts and track exercise intervals',
+                enabled: false,
             },
         ],
     },
@@ -185,41 +212,49 @@ const categories = [
                 title: 'Statistics',
                 icon: 'pi pi-chart-pie',
                 description: 'Calculate mean, median, mode, and standard deviation',
+                enabled: false,
             },
             {
                 title: 'Basic Math',
                 icon: 'pi pi-calculator',
                 description: 'Perform basic arithmetic and mathematical operations',
+                enabled: false,
             },
             {
                 title: 'Geometry',
                 icon: 'pi pi-th-large',
                 description: 'Calculate area, perimeter, and angles of shapes',
+                enabled: false,
             },
             {
                 title: 'Area',
                 icon: 'pi pi-stop',
                 description: 'Find areas of different geometric shapes and figures',
+                enabled: false,
             },
             {
                 title: 'Volume',
                 icon: 'pi pi-box',
                 description: 'Calculate volumes of 3D shapes and containers',
+                enabled: false,
             },
             {
                 title: 'Conversion',
                 icon: 'pi pi-sync',
                 description: 'Convert between different units of measurement',
+                enabled: false,
             },
             {
                 title: 'Time',
                 icon: 'pi pi-clock',
                 description: 'Calculate time differences and time zones',
+                enabled: false,
             },
             {
                 title: 'Date',
                 icon: 'pi pi-calendar',
                 description: 'Find dates, durations, and working days',
+                enabled: false,
             },
         ],
     },
@@ -365,6 +400,14 @@ const hasResults = computed(() => {
 
             &::before {
                 @apply opacity-100;
+            }
+        }
+
+        &--disabled {
+            @apply cursor-not-allowed opacity-75;
+
+            &:hover {
+                @apply transform-none;
             }
         }
     }
@@ -514,6 +557,15 @@ const hasResults = computed(() => {
 
     &__no-results p {
         @apply text-gray-600 dark:text-gray-400;
+    }
+
+    &__overlay {
+        @apply absolute inset-0 bg-gray-900/60 flex items-center justify-center
+               backdrop-blur-[2px] rounded-lg;
+
+        span {
+            @apply bg-gray-900/80 text-white px-4 py-2 rounded-lg text-sm font-medium;
+        }
     }
 }
 </style>
