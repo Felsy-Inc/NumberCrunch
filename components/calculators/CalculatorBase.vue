@@ -270,7 +270,7 @@ const handleEnterKey = () => {
 
     // Form
     &__form {
-        @apply space-y-2;
+        @apply space-y-4;
     }
 
     .form {
