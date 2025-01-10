@@ -3,59 +3,83 @@
         color="emerald"
         icon="percentage"
         title="Percentage of a number"
+        :can-calculate="isFormValid"
         :explanation="explanation"
-        :can-calculate="canCalculate"
+        :history="history"
         :result="result"
         :result-formula="resultFormula"
-        :history="history"
         @calculate="calculate"
-        @clear="clear"
+        @clear="resetForm"
     >
         <template #content>
-            <div>
-                <label class="calculator-base__label">Percentage Value</label>
-                <div class="calculator-base__input-wrapper">
-                    <InputNumber
-                        class="calculator-base__input"
-                        v-model="percentage"
-                        :min="0"
-                        :max="1000000"
-                        placeholder="Enter percentage"
-                    />
-                    <span class="calculator-base__percentage-symbol">%</span>
+            <form @submit.prevent="calculate" class="calculator-base__form">
+                <div class="calculator-base__form-group">
+                    <label class="form__label">Percentage Value</label>
+                    <div class="form__input-wrapper">
+                        <InputNumber
+                            v-model="formData.percentage"
+                            class="form__input"
+                            placeholder="Enter percentage"
+                            :min="MIN_PERCENTAGE"
+                            :max="MAX_PERCENTAGE"
+                            @input="(e: InputNumberChangeEvent) => (formData.percentage = e.value)"
+                        />
+                        <span class="form__percentage-symbol">%</span>
+                    </div>
                 </div>
-            </div>
 
-            <div>
-                <label class="calculator-base__label">Number</label>
-                <InputNumber
-                    class="calculator-base__input"
-                    v-model="number"
-                    placeholder="Enter number"
-                />
-            </div>
+                <!-- Number Input -->
+                <div class="form-group">
+                    <label class="form__label">Number</label>
+                    <InputNumber
+                        v-model="formData.number"
+                        class="form__input"
+                        :min="MIN_NUMBER"
+                        :max="MAX_NUMBER"
+                        placeholder="Enter number"
+                        @input="(e: InputNumberChangeEvent) => (formData.number = e.value)"
+                    />
+                </div>
 
-            <!-- Common Percentages -->
-            <div class="calculator-base__percentage-buttons">
-                <Button
-                    v-for="p in commonPercentages"
-                    class="p-button-outlined"
-                    :title="`Set percentage value to ${p}%`"
-                    :key="p"
-                    @click="percentage = p"
-                >
-                    {{ p }}%
-                </Button>
-            </div>
+                <!-- Common Percentages -->
+                <div class="form__percentage-buttons">
+                    <Button
+                        v-for="p in COMMON_PERCENTAGES"
+                        :key="p"
+                        class="p-button-outlined"
+                        :title="`Set percentage value to ${p}%`"
+                        @click="setPercentage(p)"
+                    >
+                        {{ p }}%
+                    </Button>
+                </div>
+            </form>
         </template>
     </CalculatorBase>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import CalculatorBase from '~/components/calculators/CalculatorBase.vue';
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
+import { useFormValidation } from '~/composables/useFormValidation';
 
-// Meta
+// Types
+interface PercentageFormData {
+    percentage: number | null;
+    number: number | null;
+}
+
+interface InputNumberChangeEvent {
+    value: number | null;
+}
+
+// Constants
+const MIN_PERCENTAGE = 0;
+const MAX_PERCENTAGE = 1000000;
+const MIN_NUMBER = 0;
+const MAX_NUMBER = 1000000;
+const COMMON_PERCENTAGES = [25, 50, 75, 100] as const;
+
 const explanation = `
 <p>To calculate a percentage of a number:</p>
 <ol>
@@ -83,32 +107,67 @@ const explanation = `
 </ol>
 `;
 
-// Calculator
-const commonPercentages = [25, 50, 75, 100];
-const percentage = ref(null);
-const number = ref(null);
-const result = ref(null);
-const resultFormula = ref(null);
-const history = ref([]);
+// Composables
+const { validateForm } = useFormValidation();
 
-const canCalculate = computed(() => Boolean(percentage.value) && Boolean(number.value));
+// State
+const result = ref<string | undefined>(undefined);
+const resultFormula = ref<string | undefined>(undefined);
+const history = ref<string[]>([]);
 
-const calculate = () => {
-    const calculatedResult = (percentage.value * number.value) / 100;
-    result.value = formatNumber(calculatedResult);
-    resultFormula.value = `${percentage.value}% of ${formatNumber(number.value)} = ${result.value}`;
-    history.value = [
-        `${percentage.value}% of ${formatNumber(number.value)} = ${result.value}`,
-        ...history.value.slice(0, 4),
-    ];
+// Initial form state
+const formData = ref<PercentageFormData>({
+    percentage: null,
+    number: null,
+});
+
+// Computed
+const isFormValid = computed(() => {
+    return validateForm({
+        percentage:
+            (formData.value.percentage ?? 0) > 0 &&
+            (formData.value.percentage ?? 0) <= MAX_PERCENTAGE,
+        number: (formData.value.number ?? 0) >= 0 && (formData.value.number ?? 0) <= MAX_NUMBER,
+    });
+});
+
+const setPercentage = (value: number) => {
+    formData.value.percentage = value;
 };
 
-const formatNumber = (num) => new Intl.NumberFormat().format(num);
+const formatNumber = (num: number): string => {
+    return new Intl.NumberFormat().format(num);
+};
 
-const clear = () => {
-    percentage.value = null;
-    number.value = null;
-    result.value = null;
-    error.value = '';
+const calculate = () => {
+    if (!isFormValid.value || !formData.value.percentage || !formData.value.number) return;
+
+    try {
+        const calculatedResult = (formData.value.percentage * formData.value.number) / 100;
+        result.value = formatNumber(calculatedResult);
+
+        const formattedNumber = formatNumber(formData.value.number);
+        const formattedResult = formatNumber(calculatedResult);
+
+        resultFormula.value = `${formData.value.percentage}% of ${formattedNumber} = ${formattedResult}`;
+
+        // Add calculation to history with more detailed information
+        history.value = [
+            `${formData.value.percentage}% × ${formattedNumber} ÷ 100 = ${formattedResult}`,
+            ...history.value.slice(0, 4),
+        ];
+    } catch (err) {
+        result.value = undefined;
+        resultFormula.value = undefined;
+    }
+};
+
+const resetForm = () => {
+    formData.value = {
+        percentage: null,
+        number: null,
+    };
+    result.value = undefined;
+    resultFormula.value = undefined;
 };
 </script>

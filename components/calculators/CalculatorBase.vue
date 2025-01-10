@@ -11,7 +11,7 @@
         </template>
 
         <template #content>
-            <section class="calculator-base__content">
+            <section class="calculator-base__content" @keyup.enter="handleEnterKey">
                 <!-- Input Section -->
                 <div class="calculator-base__content-left">
                     <slot name="content"></slot>
@@ -52,9 +52,10 @@
                                 <p class="calculator-base__result-value">
                                     {{ result }}
                                 </p>
-                                <p class="calculator-base__result-formula">
-                                    {{ resultFormula }}
-                                </p>
+                                <p
+                                    class="calculator-base__result-formula"
+                                    v-html="resultFormula"
+                                ></p>
                             </div>
                             <Button
                                 class="p-button-outlined flex-shrink-0"
@@ -184,7 +185,7 @@ const copyResult = async () => {
                 severity: 'success',
                 summary: 'Copied!',
                 detail: 'Result copied to clipboard',
-                life: 300000,
+                life: 3000,
             });
         } catch (err) {
             toast.add({
@@ -196,11 +197,21 @@ const copyResult = async () => {
         }
     }
 };
+
+const handleEnterKey = () => {
+    if (props.canCalculate) {
+        emit('calculate');
+    }
+};
 </script>
 
 <style lang="scss">
 .calculator-base {
     @apply max-w-3xl mx-auto bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700;
+
+    &.p-card {
+        @apply rounded-none md:rounded-xl;
+    }
 
     // Theme overwrites
     &--emerald {
@@ -246,41 +257,51 @@ const copyResult = async () => {
 
     // Layout
     &__content {
-        @apply grid grid-cols-1 lg:grid-cols-2 gap-8 p-4;
+        @apply grid grid-cols-1 lg:grid-cols-2 gap-4 p-4;
     }
 
     &__content-left {
-        @apply space-y-6;
+        @apply space-y-4;
     }
 
-    // Input Fields
-    &__label {
-        @apply block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300;
+    &__content-right {
+        @apply space-y-4;
     }
 
-    &__input-wrapper {
-        @apply relative;
+    // Form
+    &__form {
+        @apply space-y-2;
     }
 
-    &__input {
-        @apply w-full;
-    }
+    .form {
+        &__label {
+            @apply block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300;
+        }
 
-    &__radio-group {
-        @apply flex items-center gap-2 mb-2;
-    }
+        &__input-wrapper {
+            @apply relative;
+        }
 
-    &__percentage-symbol {
-        @apply absolute right-3 top-2 text-gray-500 dark:text-gray-400;
-    }
+        &__input {
+            @apply w-full;
+        }
 
-    // Buttons
-    &__percentage-buttons {
-        @apply flex gap-4 flex-wrap;
+        &__radio-group {
+            @apply flex items-center gap-2 mb-2;
+        }
+
+        &__percentage-symbol {
+            @apply absolute right-3 top-2 text-gray-500 dark:text-gray-400;
+        }
+
+        // Buttons
+        &__percentage-buttons {
+            @apply flex gap-2 flex-wrap;
+        }
     }
 
     &__action-buttons {
-        @apply flex gap-4;
+        @apply flex gap-2;
     }
 
     &__calculate-btn {
@@ -322,7 +343,7 @@ const copyResult = async () => {
 
     // Help Section
     &__help {
-        @apply mt-6 rounded-lg border border-gray-200 dark:border-gray-700 p-4 bg-gray-50/50 dark:bg-gray-800/30;
+        @apply rounded-lg border border-gray-200 dark:border-gray-700 p-4 bg-gray-50/50 dark:bg-gray-800/30;
     }
 
     &__help-container {
@@ -378,10 +399,6 @@ const copyResult = async () => {
     }
 
     // History Section
-    &__history {
-        @apply mt-4;
-    }
-
     &__history-title {
         @apply font-medium mb-2 text-gray-900 dark:text-white;
     }
