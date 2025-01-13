@@ -114,7 +114,7 @@ const categories = [
                 title: 'Mortgage',
                 icon: 'pi pi-home',
                 description: 'Estimate mortgage payments and compare different loan options',
-                enabled: false,
+                enabled: true,
             },
             {
                 title: 'Investment',

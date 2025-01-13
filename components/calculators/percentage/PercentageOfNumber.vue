@@ -22,7 +22,7 @@
                             placeholder="Enter percentage"
                             :min="MIN_PERCENTAGE"
                             :max="MAX_PERCENTAGE"
-                            @input="(e: InputNumberChangeEvent) => (formData.percentage = e.value)"
+                            @input="(e) => (formData.percentage = Number(e.value))"
                         />
                         <span class="form__percentage-symbol">%</span>
                     </div>
@@ -37,7 +37,7 @@
                         :min="MIN_NUMBER"
                         :max="MAX_NUMBER"
                         placeholder="Enter number"
-                        @input="(e: InputNumberChangeEvent) => (formData.number = e.value)"
+                        @input="(e) => (formData.number = Number(e.value))"
                     />
                 </div>
 

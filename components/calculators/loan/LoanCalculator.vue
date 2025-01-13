@@ -33,7 +33,7 @@
                         mode="currency"
                         :currency="formData.currency"
                         :min="0"
-                        @input="(e: InputNumberChangeEvent) => (formData.loanAmount = e.value)"
+                        @input="(e) => (formData.loanAmount = Number(e.value))"
                     />
                 </div>
 
@@ -48,7 +48,7 @@
                             :max="100"
                             :minFractionDigits="2"
                             :maxFractionDigits="2"
-                            @input="(e: InputNumberChangeEvent) => (formData.interestRate = e.value)"
+                            @input="(e) => (formData.interestRate = Number(e.value))"
                         />
                         <span class="form__percentage-symbol">%</span>
                     </div>
@@ -68,7 +68,7 @@
                         :min="1"
                         :max="formData.termUnit === 'years' ? 100 : 1200"
                         :placeholder="`Enter loan term in ${formData.termUnit}`"
-                        @input="(e: InputNumberChangeEvent) => (formData.loanTerm = e.value)"
+                        @input="(e) => (formData.loanTerm = Number(e.value))"
                     />
                 </div>
             </form>
@@ -89,10 +89,6 @@ interface LoanFormData {
     loanTerm: number | null;
     currency: string;
     termUnit: 'years' | 'months';
-}
-
-interface InputNumberChangeEvent {
-    value: number | null;
 }
 
 // Meta
@@ -140,8 +136,7 @@ const explanation = `
 </ol>
 `;
 
-// Calculator
-const commonTerms = [15, 20, 25, 30];
+// Refs
 const result = ref<string | undefined>(undefined);
 const resultFormula = ref<string | undefined>(undefined);
 const history = ref<string[]>([]);
@@ -233,10 +228,6 @@ const resetForm = () => {
     };
     result.value = undefined;
     resultFormula.value = undefined;
-};
-
-const setTermFromYears = (years: number) => {
-    formData.value.loanTerm = formData.value.termUnit === 'years' ? years : years * 12;
 };
 
 watch(

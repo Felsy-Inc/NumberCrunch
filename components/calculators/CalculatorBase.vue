@@ -64,6 +64,7 @@
                                 @click="copyResult"
                             />
                         </div>
+                        <slot name="after-result"></slot>
                     </div>
 
                     <!-- Formula Help -->
@@ -79,7 +80,6 @@
                             </div>
                         </div>
                     </div>
-
                     <!-- Calculation History -->
                     <div v-if="history.length" class="calculator-base__history">
                         <h3 class="calculator-base__history-title">Recent Calculations</h3>
