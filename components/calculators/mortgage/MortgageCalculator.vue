@@ -225,7 +225,7 @@ const explanation = `
             <mo>]</mo>
         </mrow>
     </math>
-</p>Months
+</p>
 </p>
 
 <p><strong>Linear Mortgage:</strong> Decreasing monthly payments with fixed principal portion</p>
