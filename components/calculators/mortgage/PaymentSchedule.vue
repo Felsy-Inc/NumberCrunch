@@ -17,19 +17,19 @@
     <!-- Summary Section -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
         <div class="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
-            <div class="text-sm text-gray-600 dark:text-gray-400">Total Principal</div>
+            <div class="text-sm text-gray-600 dark:text-gray-400">Principal</div>
             <div class="text-lg font-bold">
                 {{ formatCurrency(totalPrincipal, currency) }}
             </div>
         </div>
         <div class="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
-            <div class="text-sm text-gray-600 dark:text-gray-400">Total Interest</div>
+            <div class="text-sm text-gray-600 dark:text-gray-400">Interest</div>
             <div class="text-lg font-bold">
                 {{ formatCurrency(totalInterest, currency) }}
             </div>
         </div>
         <div class="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
-            <div class="text-sm text-gray-600 dark:text-gray-400">Total Payments</div>
+            <div class="text-sm text-gray-600 dark:text-gray-400">Total Payment</div>
             <div class="text-lg font-bold">
                 {{ formatCurrency(totalPayments, currency) }}
             </div>
