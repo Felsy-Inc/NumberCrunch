@@ -18,7 +18,7 @@
             :mortgage-type="formData.mortgageType"
             :property-tax="scheduleProps.propertyTax"
             :insurance="scheduleProps.insurance"
-            :currency="formData.currency"
+            :currency="userPreferences.currency"
         />
     </Dialog>
     <CalculatorBase
@@ -35,59 +35,6 @@
     >
         <template #content>
             <form @submit.prevent="calculate" class="calculator-base__form">
-                <!-- Currency Selection -->
-                <div class="form-group">
-                    <label class="form__label">Currency</label>
-                    <Select
-                        v-model="formData.currency"
-                        class="form__input"
-                        optionLabel="label"
-                        optionValue="value"
-                        :options="availableCurrencies"
-                    />
-                </div>
-
-                <!-- Property Value -->
-                <div class="form-group">
-                    <label class="form__label">Property Value</label>
-                    <InputNumber
-                        v-model="formData.propertyValue"
-                        class="form__input"
-                        placeholder="Enter property value"
-                        mode="currency"
-                        :currency="formData.currency"
-                        :min="0"
-                        @input="(e) => (formData.propertyValue = Number(e.value))"
-                    />
-                </div>
-
-                <!-- Down Payment -->
-                <div class="form-group">
-                    <label class="form__label">Down Payment</label>
-                    <div class="form__input-wrapper">
-                        <InputNumber
-                            v-model="formData.downPaymentPercent"
-                            class="form__input"
-                            placeholder="Enter down payment percentage"
-                            :min="0"
-                            :max="100"
-                            :minFractionDigits="2"
-                            :maxFractionDigits="2"
-                            @input="(e) => (formData.downPaymentPercent = Number(e.value))"
-                        />
-                        <span class="form__percentage-symbol">%</span>
-                    </div>
-                    <InputNumber
-                        v-model="downPaymentAmount"
-                        class="form__input mt-2"
-                        placeholder="Down payment amount"
-                        mode="currency"
-                        :currency="formData.currency"
-                        :min="0"
-                        @input="(e) => (formData.downPaymentPercent = Number(e.value))"
-                    />
-                </div>
-
                 <!-- Mortgage Type -->
                 <div class="form-group">
                     <label class="form__label">Mortgage Type</label>
@@ -105,6 +52,21 @@
                         />
                         <label for="linear">Linear</label>
                     </div>
+                </div>
+
+                <!-- Property Value -->
+                <div class="form-group">
+                    <label class="form__label">Property Value</label>
+                    <InputNumber
+                        v-model="formData.propertyValue"
+                        class="form__input"
+                        placeholder="Enter property value"
+                        mode="currency"
+                        :currency="userPreferences.currency"
+                        :min="0"
+                        :maxFractionDigits="0"
+                        @input="(e) => (formData.propertyValue = Number(e.value))"
+                    />
                 </div>
 
                 <!-- Interest Rate -->
@@ -138,27 +100,85 @@
                     />
                 </div>
 
+                <!-- Down Payment -->
+                <div class="form-group">
+                    <label class="form__label mb-0">Down Payment</label>
+                    <div class="form__radio-group">
+                        <RadioButton
+                            v-model="formData.hasDownPayment"
+                            :value="false"
+                            inputId="downPaymentNo"
+                        />
+                        <label for="downPaymentNo">No</label>
+                        <RadioButton
+                            v-model="formData.hasDownPayment"
+                            :value="true"
+                            inputId="downPaymentYes"
+                        />
+                        <label for="downPaymentYes">Yes</label>
+                    </div>
+                    <template v-if="formData.hasDownPayment">
+                        <div class="form__input-wrapper">
+                            <InputNumber
+                                v-model="formData.downPaymentPercent"
+                                class="form__input"
+                                placeholder="Enter down payment percentage"
+                                :min="0"
+                                :max="100"
+                                :maxFractionDigits="2"
+                                @input="(e) => (formData.downPaymentPercent = Number(e.value))"
+                            />
+                            <span class="form__percentage-symbol">%</span>
+                        </div>
+                        <InputNumber
+                            v-model="downPaymentAmount"
+                            class="form__input mt-2"
+                            placeholder="Down payment amount"
+                            mode="currency"
+                            :currency="userPreferences.currency"
+                            :min="0"
+                            @input="(e) => (formData.downPaymentPercent = Number(e.value))"
+                        />
+                    </template>
+                </div>
+
                 <!-- Additional Costs -->
                 <div class="form-group">
-                    <label class="form__label">Additional Monthly Costs</label>
-                    <InputNumber
-                        v-model="formData.propertyTax"
-                        class="form__input mb-2"
-                        placeholder="Property Tax"
-                        mode="currency"
-                        :currency="formData.currency"
-                        :min="0"
-                        @input="(e) => (formData.propertyTax = Number(e.value))"
-                    />
-                    <InputNumber
-                        v-model="formData.insurance"
-                        class="form__input"
-                        placeholder="Insurance"
-                        mode="currency"
-                        :currency="formData.currency"
-                        :min="0"
-                        @input="(e) => (formData.insurance = Number(e.value))"
-                    />
+                    <label class="form__label mb-0">Additional Monthly Costs</label>
+                    <div class="form__radio-group">
+                        <RadioButton
+                            v-model="formData.hasAdditionalCosts"
+                            :value="false"
+                            inputId="additionalCostsNo"
+                        />
+                        <label for="additionalCostsNo">No</label>
+                        <RadioButton
+                            v-model="formData.hasAdditionalCosts"
+                            :value="true"
+                            inputId="additionalCostsYes"
+                        />
+                        <label for="additionalCostsYes">Yes</label>
+                    </div>
+                    <template v-if="formData.hasAdditionalCosts">
+                        <InputNumber
+                            v-model="formData.propertyTax"
+                            class="form__input mb-2"
+                            placeholder="Property Tax"
+                            mode="currency"
+                            :currency="userPreferences.currency"
+                            :min="0"
+                            @input="(e) => (formData.propertyTax = Number(e.value))"
+                        />
+                        <InputNumber
+                            v-model="formData.insurance"
+                            class="form__input"
+                            placeholder="Insurance"
+                            mode="currency"
+                            :currency="userPreferences.currency"
+                            :min="0"
+                            @input="(e) => (formData.insurance = Number(e.value))"
+                        />
+                    </template>
                 </div>
             </form>
         </template>
@@ -179,15 +199,17 @@ import { ref, computed, nextTick } from 'vue';
 import { useFormValidation } from '~/composables/useFormValidation';
 import { useCurrencyFormatter } from '~/composables/useCurrencyFormatter';
 import { useWindowSize } from '@vueuse/core';
+import { useUserPreferencesStore } from '~/stores/userPreferences';
 
 // Types
 interface MortgageFormData {
     propertyValue: number | null;
+    hasDownPayment: boolean;
     downPaymentPercent: number | null;
+    hasAdditionalCosts: boolean;
     mortgageType: 'annuity' | 'linear';
     interestRate: number | null;
     loanTerm: number | null;
-    currency: string;
     termUnit: 'years';
     propertyTax: number | null;
     insurance: number | null;
@@ -260,19 +282,21 @@ const scheduleRef = ref<InstanceType<typeof PaymentSchedule> | null>(null);
 // Initial form state
 const formData = ref<MortgageFormData>({
     propertyValue: null,
-    downPaymentPercent: 20, // Common default
+    hasDownPayment: false,
+    downPaymentPercent: 20,
+    hasAdditionalCosts: false,
     mortgageType: 'annuity',
     interestRate: null,
     loanTerm: null,
-    currency: 'EUR',
     termUnit: 'years',
     propertyTax: null,
     insurance: null,
 });
 
 // Composables
-const { formatCurrency, availableCurrencies } = useCurrencyFormatter();
+const { formatCurrency } = useCurrencyFormatter();
 const { validateForm } = useFormValidation();
+const userPreferences = useUserPreferencesStore();
 
 // Computed
 const isFormValid = computed(() => {
@@ -286,13 +310,21 @@ const isFormValid = computed(() => {
 });
 
 const downPaymentAmount = computed(() => {
-    if (!formData.value.propertyValue || formData.value.downPaymentPercent === null) return null;
+    if (
+        !formData.value.propertyValue ||
+        !formData.value.hasDownPayment ||
+        formData.value.downPaymentPercent === null
+    )
+        return null;
     return (formData.value.propertyValue * formData.value.downPaymentPercent) / 100;
 });
 
 const loanAmount = computed(() => {
     if (!formData.value.propertyValue) return null;
-    return formData.value.propertyValue - (downPaymentAmount.value ?? 0);
+    return (
+        formData.value.propertyValue -
+        (formData.value.hasDownPayment ? downPaymentAmount.value ?? 0 : 0)
+    );
 });
 
 const scheduleProps = computed(() => ({
@@ -353,11 +385,12 @@ const calculateLinearPayment = (
 const resetForm = () => {
     formData.value = {
         propertyValue: null,
+        hasDownPayment: false,
         downPaymentPercent: 20,
+        hasAdditionalCosts: false,
         mortgageType: 'annuity',
         interestRate: null,
         loanTerm: null,
-        currency: 'EUR',
         termUnit: 'years',
         propertyTax: null,
         insurance: null,
@@ -378,21 +411,21 @@ const updateResults = (
     const totalPayment = totalMonthly * totalMonths;
     const totalInterest = totalPayment - principal;
 
-    result.value = formatCurrency(totalMonthly, formData.value.currency);
+    result.value = formatCurrency(totalMonthly, userPreferences.currency);
     resultFormula.value = `Monthly Payment: ${formatCurrency(
         totalMonthly,
-        formData.value.currency
+        userPreferences.currency
     )}<br>Total Interest: ${formatCurrency(
         totalInterest,
-        formData.value.currency
-    )}<br>Total Payment: ${formatCurrency(totalPayment, formData.value.currency)}`;
+        userPreferences.currency
+    )}<br>Total Payment: ${formatCurrency(totalPayment, userPreferences.currency)}`;
 
     history.value = [
-        `${formatCurrency(principal, formData.value.currency)} mortgage at ${
+        `${formatCurrency(principal, userPreferences.currency)} mortgage at ${
             formData.value.interestRate
         }% for ${formData.value.loanTerm} ${formData.value.termUnit} = ${formatCurrency(
             totalMonthly,
-            formData.value.currency
+            userPreferences.currency
         )}/month`,
         ...history.value.slice(0, 4),
     ];

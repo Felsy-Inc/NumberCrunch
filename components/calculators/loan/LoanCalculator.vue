@@ -14,24 +14,13 @@
         <template #content>
             <form @submit.prevent="calculate" class="calculator-base__form">
                 <div class="form-group">
-                    <label class="form__label">Currency</label>
-                    <Select
-                        v-model="formData.currency"
-                        class="form__input"
-                        optionLabel="label"
-                        optionValue="value"
-                        :options="availableCurrencies"
-                    />
-                </div>
-
-                <div class="form-group">
                     <label class="form__label">Loan Amount</label>
                     <InputNumber
                         v-model="formData.loanAmount"
                         class="form__input"
                         placeholder="Enter loan amount"
                         mode="currency"
-                        :currency="formData.currency"
+                        :currency="userPreferences.currency"
                         :min="0"
                         @input="(e) => (formData.loanAmount = Number(e.value))"
                     />
@@ -81,13 +70,13 @@ import CalculatorBase from '~/components/calculators/CalculatorBase.vue';
 import { ref, computed, watch } from 'vue';
 import { useCurrencyFormatter } from '~/composables/useCurrencyFormatter';
 import { useFormValidation } from '~/composables/useFormValidation';
+import { useUserPreferencesStore } from '~/stores/userPreferences';
 
 // Types
 interface LoanFormData {
     loanAmount: number | null;
     interestRate: number | null;
     loanTerm: number | null;
-    currency: string;
     termUnit: 'years' | 'months';
 }
 
@@ -141,18 +130,18 @@ const result = ref<string | undefined>(undefined);
 const resultFormula = ref<string | undefined>(undefined);
 const history = ref<string[]>([]);
 
+// Composables and store
+const userPreferences = useUserPreferencesStore();
+const { formatCurrency } = useCurrencyFormatter();
+const { validateForm } = useFormValidation();
+
 // Initial form state
 const formData = ref<LoanFormData>({
     loanAmount: null,
     interestRate: null,
     loanTerm: null,
-    currency: 'EUR',
     termUnit: 'years',
 });
-
-// Composables
-const { formatCurrency, availableCurrencies } = useCurrencyFormatter();
-const { validateForm } = useFormValidation();
 
 // Computed
 const isFormValid = computed(() => {
@@ -198,21 +187,21 @@ const updateResults = (monthlyPayment: number, principal: number, totalMonths: n
     const totalPayment = monthlyPayment * totalMonths;
     const totalInterest = totalPayment - principal;
 
-    result.value = formatCurrency(monthlyPayment, formData.value.currency);
+    result.value = formatCurrency(monthlyPayment, userPreferences.currency);
     resultFormula.value = `Monthly Payment: ${formatCurrency(
         monthlyPayment,
-        formData.value.currency
+        userPreferences.currency
     )}<br>Total Interest: ${formatCurrency(
         totalInterest,
-        formData.value.currency
-    )}<br>Total Payment: ${formatCurrency(totalPayment, formData.value.currency)}`;
+        userPreferences.currency
+    )}<br>Total Payment: ${formatCurrency(totalPayment, userPreferences.currency)}`;
 
     history.value = [
-        `${formatCurrency(principal, formData.value.currency)} loan at ${
+        `${formatCurrency(principal, userPreferences.currency)} loan at ${
             formData.value.interestRate
         }% for ${formData.value.loanTerm} ${formData.value.termUnit} = ${formatCurrency(
             monthlyPayment,
-            formData.value.currency
+            userPreferences.currency
         )}/month`,
         ...history.value.slice(0, 4),
     ];
@@ -223,7 +212,6 @@ const resetForm = () => {
         loanAmount: null,
         interestRate: null,
         loanTerm: null,
-        currency: 'EUR',
         termUnit: 'years',
     };
     result.value = undefined;

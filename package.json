@@ -12,17 +12,19 @@
     "dependencies": {
         "@nuxtjs/google-adsense": "^3.0.0",
         "@nuxtjs/tailwindcss": "^6.13.0",
+        "@pinia/nuxt": "^0.9.0",
         "@primevue/themes": "^4.2.5",
         "@vueuse/core": "^12.4.0",
         "jspdf": "^2.5.2",
         "jspdf-autotable": "^3.8.4",
         "nuxt": "^3.15.1",
+        "pinia": "^2.3.0",
         "primeicons": "^7.0.0",
         "primevue": "^4.2.5",
         "vue": "latest"
     },
     "devDependencies": {
         "@primevue/nuxt-module": "^4.2.5",
-        "sass": "^1.83.1"
+        "sass": "^1.83.4"
     }
 }

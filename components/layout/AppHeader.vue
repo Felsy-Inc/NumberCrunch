@@ -8,11 +8,10 @@
                     </RouterLink>
                 </template>
                 <template #item="{ item, props, hasSubmenu }">
-                    <!-- :to="item.route" -->
                     <RouterLink
                         v-if="item.route"
                         v-slot="{ href, navigate }"
-                        to="/calculator/percentage"
+                        :to="item.route"
                         custom
                     >
                         <a v-ripple :href="href" v-bind="props.action" @click="navigate">
@@ -30,7 +29,7 @@
                     <i class="pi pi-bars text-xl" />
                 </template>
                 <template #end>
-                    <DarkModeToggle />
+                    <SettingsButton />
                 </template>
             </MegaMenu>
         </div>
@@ -39,7 +38,7 @@
 
 <script setup>
 import { ref } from 'vue';
-import DarkModeToggle from '../base/DarkModeToggle.vue';
+import SettingsButton from '../base/SettingsButton.vue';
 
 const items = ref([
     {

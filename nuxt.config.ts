@@ -5,8 +5,17 @@ export default defineNuxtConfig({
     modules: [
         '@nuxtjs/tailwindcss',
         '@primevue/nuxt-module',
+        [
+            '@pinia/nuxt',
+            {
+                autoImports: ['defineStore', 'storeToRefs', 'acceptHMRUpdate'],
+            },
+        ],
         // '@nuxtjs/google-adsense'
     ],
+    imports: {
+        dirs: ['stores'],
+    },
     css: ['@/assets/scss/main.scss'],
     primevue: {
         importTheme: { from: '@/themes/mytheme.js' },
