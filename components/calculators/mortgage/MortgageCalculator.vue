@@ -79,7 +79,6 @@
                             placeholder="Enter interest rate"
                             :min="0"
                             :max="100"
-                            :minFractionDigits="2"
                             :maxFractionDigits="2"
                             @input="(e) => (formData.interestRate = Number(e.value))"
                         />

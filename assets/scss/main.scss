@@ -3,6 +3,9 @@
 .p-toast {
     max-width: 90%;
 }
+.settings-page {
+    @apply relative flex-1 my-8 lg:my-24;
+}
 
 .calculator-page {
     @apply relative flex-1 my-8 lg:my-24;
