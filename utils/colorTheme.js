@@ -1,12 +1,12 @@
 import { updatePrimaryPalette } from '@primevue/themes';
 import { nextTick } from 'vue';
 
-export const resetTheme = async () => {
+export const resetColorTheme = async () => {
     await nextTick();
-    updateTheme('sky');
+    updateColorTheme('sky');
 };
 
-export const updateTheme = (color) => {
+export const updateColorTheme = (color) => {
     updatePrimaryPalette({
         50: `{${color}.50}`,
         100: `{${color}.100}`,

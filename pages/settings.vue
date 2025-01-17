@@ -61,73 +61,34 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch } from 'vue';
+import { onMounted, watch } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useUserPreferencesStore } from '~/stores/userPreferences';
-import { AVAILABLE_CURRENCIES } from '../constants/currencies';
+import { AVAILABLE_CURRENCIES } from '~/constants/currencies';
+const { $updateTheme } = useNuxtApp();
 
 const AVAILABLE_THEMES = [
-    { label: 'Light', value: 'light' },
-    { label: 'Dark', value: 'dark' },
-    { label: 'System', value: 'system' },
+    { icon: 'pi pi-sun', label: 'Light', value: 'light' },
+    { icon: 'pi pi-moon', label: 'Dark', value: 'dark' },
+    { icon: 'pi pi-desktop', label: 'System', value: 'system' },
 ];
 
 const userPreferencesStore = useUserPreferencesStore();
-const { theme, currency } = storeToRefs(userPreferencesStore);
-
-const icons = {
-    system: 'pi pi-desktop',
-    light: 'pi pi-sun',
-    dark: 'pi pi-moon',
-};
-
-const currentIcon = ref(icons[theme.value || 'system']);
-const currentButtonClass = ref(`${theme.value || 'system'}-button`);
+const { currency } = storeToRefs(userPreferencesStore);
+const theme = ref('system');
 
 watch(theme, (newTheme, oldTheme) => {
     if (oldTheme !== undefined) {
-        updateMode(newTheme);
+        $updateTheme(newTheme);
     }
 });
 watch(currency, (newCurrency) => {
     userPreferencesStore.setCurrency(newCurrency);
 });
 
-const updateMode = (newTheme) => {
-    currentIcon.value = icons[newTheme];
-    currentButtonClass.value = `${newTheme}-button`;
-    switch (newTheme) {
-        case 'dark':
-            document.documentElement.classList.add('dark');
-            userPreferencesStore.setTheme('dark');
-            break;
-        case 'light':
-            document.documentElement.classList.remove('dark');
-            userPreferencesStore.setTheme('light');
-            break;
-        default:
-            userPreferencesStore.setTheme('system');
-            applySystemPreference();
-    }
-};
-
-const applySystemPreference = () => {
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    document.documentElement.classList.toggle('dark', prefersDark);
-};
-
 onMounted(() => {
-    resetTheme();
-
-    if (theme.value === 'system') {
-        applySystemPreference();
-    } else if (theme.value === 'dark') {
-        document.documentElement.classList.add('dark');
-    }
-
-    window
-        .matchMedia('(prefers-color-scheme: dark)')
-        .addEventListener('change', applySystemPreference);
+    resetColorTheme();
+    theme.value = localStorage.getItem('theme');
 });
 </script>
 
@@ -155,7 +116,7 @@ onMounted(() => {
 }
 
 .settings-group {
-    @apply space-y-4 p-4 rounded-lg bg-gray-50 dark:bg-gray-800/50;
+    @apply space-y-4 p-4 rounded-lg bg-gray-100 dark:bg-gray-800/50;
 
     &__title {
         @apply text-lg font-semibold text-gray-900 dark:text-gray-100;

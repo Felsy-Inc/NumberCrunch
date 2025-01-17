@@ -3,6 +3,11 @@
 .p-toast {
     max-width: 90%;
 }
+
+.home-page {
+    @apply relative flex-1;
+}
+
 .settings-page {
     @apply relative flex-1 my-8 lg:my-24;
 }

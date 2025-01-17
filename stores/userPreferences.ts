@@ -4,16 +4,10 @@ import { ref, computed, onMounted } from 'vue';
 
 export const useUserPreferencesStore = defineStore('userPreferences', () => {
     const currency = ref<CurrencyType>('USD');
-    const theme = ref<'dark' | 'light' | 'system'>('system');
 
     function setCurrency(newCurrency: CurrencyType) {
         currency.value = newCurrency;
         localStorage.setItem('currency', newCurrency);
-    }
-
-    function setTheme(newTheme: 'dark' | 'light' | 'system') {
-        theme.value = newTheme;
-        localStorage.setItem('theme', newTheme);
     }
 
     function detectUserCurrency(): CurrencyType {
@@ -71,22 +65,13 @@ export const useUserPreferencesStore = defineStore('userPreferences', () => {
 
     function initializePreferences() {
         const savedCurrency = localStorage.getItem('currency') as CurrencyType;
-        const savedTheme = localStorage.getItem('theme') as 'dark' | 'light' | 'system';
 
         if (savedCurrency) {
             currency.value = savedCurrency;
         } else {
             currency.value = detectUserCurrency();
         }
-
-        if (savedTheme) theme.value = savedTheme;
     }
-
-    const isDarkMode = computed(() =>
-        theme.value === 'system'
-            ? window.matchMedia('(prefers-color-scheme: dark)').matches
-            : theme.value === 'dark'
-    );
 
     onMounted(() => {
         initializePreferences();
@@ -94,9 +79,6 @@ export const useUserPreferencesStore = defineStore('userPreferences', () => {
 
     return {
         currency,
-        theme,
         setCurrency,
-        setTheme,
-        isDarkMode,
     };
 });

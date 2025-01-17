@@ -8,16 +8,10 @@
 <script setup>
 import CalculatorList from '~/components/base/CalculatorList.vue';
 import IntroductionHero from '~/components/IntroductionHero.vue';
-import { resetTheme } from '~/utils/theme';
+import { resetColorTheme } from '~/utils/colorTheme';
 import { onMounted } from 'vue';
 
 onMounted(() => {
-    resetTheme();
+    resetColorTheme();
 });
 </script>
-
-<style lang="scss">
-.home-page {
-    @apply relative flex-1;
-}
-</style>

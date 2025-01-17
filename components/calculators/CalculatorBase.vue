@@ -107,7 +107,7 @@ import Button from 'primevue/button';
 import Message from 'primevue/message';
 import { useToast } from 'primevue/usetoast';
 import Toast from 'primevue/toast';
-import { updateTheme } from '@/utils/theme';
+import { updateColorTheme } from '@/utils/colorTheme';
 
 const emit = defineEmits(['calculate', 'clear']);
 
@@ -154,7 +154,7 @@ watch(
     () => props.color,
     (newColor) => {
         if (newColor) {
-            updateTheme(newColor);
+            updateColorTheme(newColor);
         }
     },
     { immediate: true }
