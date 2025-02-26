@@ -23,4 +23,9 @@ export default defineNuxtConfig({
     // googleAdsense: {
     //     id: 'ca-pub-8907205065732865',
     // },
+    runtimeConfig: {
+        public: {
+            exchangeRateApiKey: process.env.EXCHANGE_RATE_API_KEY,
+        },
+    },
 });

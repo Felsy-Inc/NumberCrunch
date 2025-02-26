@@ -120,7 +120,7 @@ const categories = [
                 title: 'Currency',
                 icon: 'pi pi-dollar',
                 description: 'Convert between different currencies with live rates',
-                enabled: false,
+                enabled: true,
             },
             // {
             //     title: 'Investment',
