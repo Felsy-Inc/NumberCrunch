@@ -159,12 +159,12 @@ const categories = [
                 description: 'Calculate Body Mass Index and ideal weight range',
                 enabled: true,
             },
-            // {
-            //     title: 'Calories',
-            //     icon: 'pi pi-apple',
-            //     description: 'Track daily calories and calculate meal portions',
-            //     enabled: false,
-            // },
+            {
+                title: 'Calories',
+                icon: 'pi pi-apple',
+                description: 'Track daily calories and calculate meal portions',
+                enabled: true,
+            },
             // {
             //     title: 'Heart Rate',
             //     icon: 'pi pi-heart',

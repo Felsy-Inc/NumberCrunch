@@ -24,7 +24,7 @@
                             :max="MAX_PERCENTAGE"
                             @input="(e) => (formData.percentage = Number(e.value))"
                         />
-                        <span class="form__percentage-symbol">%</span>
+                        <span class="form__input-symbol">%</span>
                     </div>
                 </div>
 

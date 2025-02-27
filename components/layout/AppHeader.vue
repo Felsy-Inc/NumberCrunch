@@ -88,12 +88,12 @@ const items = ref([
                             route: '/calculator/bmi',
                             category: 'health',
                         },
-                        // {
-                        //     label: 'Calories',
-                        //     icon: 'pi pi-chart-bar',
-                        //     route: '/calculator/calories',
-                        //     category: 'health',
-                        // },
+                        {
+                            label: 'Calories',
+                            icon: 'pi pi-apple',
+                            route: '/calculator/calories',
+                            category: 'health',
+                        },
                         // {
                         //     label: 'Heart Rate',
                         //     icon: 'pi pi-heart',

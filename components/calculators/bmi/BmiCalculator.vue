@@ -26,6 +26,7 @@
                             v-model="formData.heightCm"
                             class="form__input"
                             placeholder="Enter height in cm"
+                            suffix=" cm"
                             :min="1"
                             :max="300"
                             @input="(e) => (formData.heightCm = Number(e.value))"
@@ -35,8 +36,9 @@
                         <div class="form__input-wrapper">
                             <InputNumber
                                 v-model="formData.heightFt"
-                                class="form__input"
+                                class="form__input mb-2"
                                 placeholder="Feet"
+                                suffix=" ft"
                                 :min="0"
                                 :max="9"
                                 @input="(e) => (formData.heightFt = Number(e.value))"
@@ -45,6 +47,7 @@
                                 v-model="formData.heightIn"
                                 class="form__input"
                                 placeholder="Inches"
+                                suffix=" in"
                                 :min="0"
                                 :max="11"
                                 @input="(e) => (formData.heightIn = Number(e.value))"
@@ -67,6 +70,7 @@
                         :placeholder="`Enter weight in ${formData.weightUnit}`"
                         :min="1"
                         :max="formData.weightUnit === 'kg' ? 500 : 1100"
+                        :suffix="` ${formData.weightUnit}`"
                         @input="(e) => (formData.weight = Number(e.value))"
                     />
                 </div>
