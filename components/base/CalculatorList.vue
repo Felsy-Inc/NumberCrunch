@@ -230,19 +230,19 @@ const categories = [
                 title: 'Area',
                 icon: 'pi pi-stop',
                 description: 'Find areas of different geometric shapes and figures',
-                enabled: false,
+                enabled: true,
             },
             {
                 title: 'Volume',
                 icon: 'pi pi-box',
                 description: 'Calculate volumes of 3D shapes and containers',
-                enabled: false,
+                enabled: true,
             },
             {
                 title: 'Conversion',
                 icon: 'pi pi-sync',
                 description: 'Convert between different units of measurement',
-                enabled: false,
+                enabled: true,
             },
             // {
             //     title: 'Time',
