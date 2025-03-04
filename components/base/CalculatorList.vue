@@ -218,7 +218,7 @@ const categories = [
                 title: 'Basic Math',
                 icon: 'pi pi-calculator',
                 description: 'Perform basic arithmetic and mathematical operations',
-                enabled: false,
+                enabled: true,
             },
             // {
             //     title: 'Geometry',
