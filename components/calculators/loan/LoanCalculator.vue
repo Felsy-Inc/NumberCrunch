@@ -39,7 +39,7 @@
                             :maxFractionDigits="2"
                             @input="(e) => (formData.interestRate = Number(e.value))"
                         />
-                        <span class="form__percentage-symbol">%</span>
+                        <span class="form__input-symbol">%</span>
                     </div>
                 </div>
 
