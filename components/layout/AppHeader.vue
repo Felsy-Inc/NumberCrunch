@@ -94,18 +94,6 @@ const items = ref([
                             route: '/calculator/calories',
                             category: 'health',
                         },
-                        // {
-                        //     label: 'Heart Rate',
-                        //     icon: 'pi pi-heart',
-                        //     route: '/calculator/heart-rate',
-                        //     category: 'health',
-                        // },
-                        // {
-                        //     label: 'Body Fat',
-                        //     icon: 'pi pi-percentage',
-                        //     route: '/calculator/body-fat',
-                        //     category: 'health',
-                        // },
                     ],
                 },
             ],
@@ -149,39 +137,27 @@ const items = ref([
         items: [
             [
                 {
-                    label: 'Numbers',
+                    label: 'General',
                     items: [
                         {
-                            label: 'Number Generator',
-                            icon: 'pi pi-hashtag',
-                            route: '/randomizer/number',
+                            label: 'Random Number',
+                            icon: 'pi pi-question',
+                            route: '/randomizer/random-number',
+                        },
+                        {
+                            label: 'Coin Flip',
+                            icon: 'pi pi-question-circle',
+                            route: '/randomizer/coin-flip',
                         },
                         {
                             label: 'Dice Roll',
                             icon: 'pi pi-stop',
-                            route: '/randomizer/dice',
+                            route: '/randomizer/dice-roll',
                         },
                         {
-                            label: 'Coin Flip',
-                            icon: 'pi pi-circle',
-                            route: '/randomizer/coin',
-                        },
-                    ],
-                },
-            ],
-            [
-                {
-                    label: 'Text',
-                    items: [
-                        {
-                            label: 'Password',
-                            icon: 'pi pi-key',
-                            route: '/randomizer/password',
-                        },
-                        {
-                            label: 'Lorem Ipsum',
-                            icon: 'pi pi-align-left',
-                            route: '/randomizer/lorem-ipsum',
+                            label: 'Team Generator',
+                            icon: 'pi pi-users',
+                            route: '/randomizer/team-generator',
                         },
                     ],
                 },

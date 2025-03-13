@@ -44,7 +44,9 @@
                             :key="calc.title"
                             :to="
                                 calc.enabled
-                                    ? `/calculator/${calc.title.toLowerCase().replace(/\s+/g, '-')}`
+                                    ? `/${category.type}/${calc.title
+                                          .toLowerCase()
+                                          .replace(/\s+/g, '-')}`
                                     : ''
                             "
                             class="calculator__card"
@@ -97,6 +99,7 @@ const categories = [
         color: 'emerald',
         description:
             'Calculate your financial future with our comprehensive money management tools',
+        type: 'calculator',
         calculators: [
             {
                 title: 'Percentage',
@@ -122,36 +125,13 @@ const categories = [
                 description: 'Convert between different currencies with live rates',
                 enabled: true,
             },
-            // {
-            //     title: 'Investment',
-            //     icon: 'pi pi-chart-line',
-            //     description: 'Calculate ROI, compound interest, and investment growth',
-            //     enabled: false,
-            // },
-            // {
-            //     title: 'Tax',
-            //     icon: 'pi pi-file',
-            //     description: 'Calculate income tax, sales tax, and tax deductions',
-            //     enabled: false,
-            // },
-            // {
-            //     title: 'Business',
-            //     icon: 'pi pi-briefcase',
-            //     description: 'Profit margins, break-even analysis, and ROI calculator',
-            //     enabled: false,
-            // },
-            // {
-            //     title: 'Retail',
-            //     icon: 'pi pi-shopping-cart',
-            //     description: 'Calculate markups, discounts, and retail pricing',
-            //     enabled: false,
-            // },
         ],
     },
     {
         name: 'Health & Fitness',
         color: 'rose',
         description: 'Track your wellness journey with our health and fitness calculators',
+        type: 'calculator',
         calculators: [
             {
                 title: 'BMI',
@@ -165,67 +145,20 @@ const categories = [
                 description: 'Track daily calories and calculate meal portions',
                 enabled: true,
             },
-            // {
-            //     title: 'Heart Rate',
-            //     icon: 'pi pi-heart',
-            //     description: 'Calculate target heart rate zones for different activities',
-            //     enabled: false,
-            // },
-            // {
-            //     title: 'Body Fat',
-            //     icon: 'pi pi-ruler',
-            //     description: 'Estimate body fat percentage using different methods',
-            //     enabled: false,
-            // },
-            // {
-            //     title: 'Pregnancy',
-            //     icon: 'pi pi-user-plus',
-            //     description: 'Calculate due date and track pregnancy milestones',
-            //     enabled: false,
-            // },
-            // {
-            //     title: 'Fitness Goals',
-            //     icon: 'pi pi-chart-bar',
-            //     description: 'Track progress and calculate workout targets',
-            //     enabled: false,
-            // },
-            // {
-            //     title: 'Health Stats',
-            //     icon: 'pi pi-chart-line',
-            //     description: 'Monitor vital statistics and health metrics',
-            //     enabled: false,
-            // },
-            // {
-            //     title: 'Timer',
-            //     icon: 'pi pi-clock',
-            //     description: 'Time workouts and track exercise intervals',
-            //     enabled: false,
-            // },
         ],
     },
     {
         name: 'Math & Science',
         color: 'primary',
         description: 'Solve complex calculations with our mathematical and scientific tools',
+        type: 'calculator',
         calculators: [
-            // {
-            //     title: 'Statistics',
-            //     icon: 'pi pi-chart-pie',
-            //     description: 'Calculate mean, median, mode, and standard deviation',
-            //     enabled: false,
-            // },
             {
                 title: 'Basic Math',
                 icon: 'pi pi-calculator',
                 description: 'Perform basic arithmetic and mathematical operations',
                 enabled: true,
             },
-            // {
-            //     title: 'Geometry',
-            //     icon: 'pi pi-th-large',
-            //     description: 'Calculate area, perimeter, and angles of shapes',
-            //     enabled: false,
-            // },
             {
                 title: 'Area',
                 icon: 'pi pi-stop',
@@ -244,18 +177,38 @@ const categories = [
                 description: 'Convert between different units of measurement',
                 enabled: true,
             },
-            // {
-            //     title: 'Time',
-            //     icon: 'pi pi-clock',
-            //     description: 'Calculate time differences and time zones',
-            //     enabled: false,
-            // },
-            // {
-            //     title: 'Date',
-            //     icon: 'pi pi-calendar',
-            //     description: 'Find dates, durations, and working days',
-            //     enabled: false,
-            // },
+        ],
+    },
+    {
+        name: 'Randomizers',
+        color: 'purple',
+        description: 'Generate random numbers and data with our randomizer tools',
+        type: 'randomizer',
+        calculators: [
+            {
+                title: 'Random Number',
+                icon: 'pi pi-question',
+                description: 'Generate random numbers',
+                enabled: true,
+            },
+            {
+                title: 'Coin Flip',
+                icon: 'pi pi-question-circle',
+                description: 'Flip a coin',
+                enabled: true,
+            },
+            {
+                title: 'Dice Roll',
+                icon: 'pi pi-stop',
+                description: 'Roll a die',
+                enabled: true,
+            },
+            {
+                title: 'Team Generator',
+                icon: 'pi pi-users',
+                description: 'Generate a random team',
+                enabled: true,
+            },
         ],
     },
 ];
@@ -455,6 +408,23 @@ const hasResults = computed(() => {
             }
         }
 
+        &--purple:not(&--disabled) {
+            &:hover {
+                @apply border-purple-200 bg-purple-50/50
+             dark:bg-purple-900/10 dark:border-purple-700/50;
+
+                .calculator__icon-wrapper {
+                    @apply shadow-md shadow-purple-200/50
+               dark:shadow-purple-900/30;
+                }
+            }
+
+            &:focus {
+                @apply ring-2 ring-purple-400/50 border-purple-400
+             dark:ring-purple-500/50 dark:border-purple-500;
+            }
+        }
+
         &--disabled {
             @apply cursor-not-allowed;
 
@@ -493,6 +463,11 @@ const hasResults = computed(() => {
         &--primary {
             @apply from-blue-500 to-blue-600
              dark:from-blue-600 dark:to-blue-700;
+        }
+
+        &--purple {
+            @apply from-purple-500 to-purple-600
+             dark:from-purple-600 dark:to-purple-700;
         }
     }
 
