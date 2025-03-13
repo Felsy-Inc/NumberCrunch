@@ -181,7 +181,7 @@ const categories = [
     },
     {
         name: 'Randomizers',
-        color: 'purple',
+        color: 'violet',
         description: 'Generate random numbers and data with our randomizer tools',
         type: 'randomizer',
         calculators: [
@@ -408,20 +408,20 @@ const hasResults = computed(() => {
             }
         }
 
-        &--purple:not(&--disabled) {
+        &--violet:not(&--disabled) {
             &:hover {
-                @apply border-purple-200 bg-purple-50/50
-             dark:bg-purple-900/10 dark:border-purple-700/50;
+                @apply border-violet-200 bg-violet-50/50
+             dark:bg-violet-900/10 dark:border-violet-700/50;
 
                 .calculator__icon-wrapper {
-                    @apply shadow-md shadow-purple-200/50
-               dark:shadow-purple-900/30;
+                    @apply shadow-md shadow-violet-200/50
+               dark:shadow-violet-900/30;
                 }
             }
 
             &:focus {
-                @apply ring-2 ring-purple-400/50 border-purple-400
-             dark:ring-purple-500/50 dark:border-purple-500;
+                @apply ring-2 ring-violet-400/50 border-violet-400
+             dark:ring-violet-500/50 dark:border-violet-500;
             }
         }
 
@@ -465,9 +465,9 @@ const hasResults = computed(() => {
              dark:from-blue-600 dark:to-blue-700;
         }
 
-        &--purple {
-            @apply from-purple-500 to-purple-600
-             dark:from-purple-600 dark:to-purple-700;
+        &--violet {
+            @apply from-violet-500 to-violet-600
+             dark:from-violet-600 dark:to-violet-700;
         }
     }
 

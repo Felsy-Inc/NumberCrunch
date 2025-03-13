@@ -29,7 +29,7 @@
                             class="calculator-base__calculate-btn"
                             :disabled="!canCalculate"
                         >
-                            Calculate
+                            {{ type === 'randomizer' ? 'Generate' : 'Calculate' }}
                             <i class="calculator-base__arrow-icon pi pi-arrow-right"></i>
                         </Button>
                         <Button
@@ -123,6 +123,10 @@ const props = defineProps({
     title: {
         type: String,
         required: true,
+    },
+    type: {
+        type: String,
+        default: 'calculator',
     },
     explanation: {
         type: String,
@@ -223,6 +227,20 @@ const handleEnterKey = () => {
             }
             &__help-icon {
                 @apply text-rose-600 dark:text-rose-400;
+            }
+        }
+    }
+
+    &--violet {
+        .calculator-base {
+            &__icon-container {
+                @apply bg-violet-600 dark:bg-violet-500;
+            }
+            &__result-value {
+                @apply text-violet-600 dark:text-violet-400;
+            }
+            &__help-icon {
+                @apply text-violet-600 dark:text-violet-400;
             }
         }
     }
