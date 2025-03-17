@@ -49,9 +49,7 @@
                         <div class="calculator-base__result-container">
                             <div>
                                 <h3 class="calculator-base__result-title">Result</h3>
-                                <p class="calculator-base__result-value">
-                                    {{ result }}
-                                </p>
+                                <p class="calculator-base__result-value" v-html="result"></p>
                                 <p
                                     class="calculator-base__result-formula"
                                     v-html="resultFormula"
