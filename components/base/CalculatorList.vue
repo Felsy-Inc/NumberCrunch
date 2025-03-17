@@ -240,7 +240,7 @@ const hasResults = computed(() => {
 
 <style lang="scss">
 .calculator {
-    @apply w-full min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-8 
+    @apply w-full min-h-screen py-8 
          dark:from-gray-900 dark:to-gray-800;
 
     &__container {
@@ -302,7 +302,7 @@ const hasResults = computed(() => {
     // Category container styles
     &__category-container {
         @apply bg-gradient-to-br from-white to-gray-50 rounded-xl p-6 shadow-sm mb-8
-           dark:from-gray-800 dark:to-gray-800/80;
+           dark:from-gray-800 dark:to-gray-800/80 border border-gray-200 dark:border-gray-700;
     }
 
     &__category-header {

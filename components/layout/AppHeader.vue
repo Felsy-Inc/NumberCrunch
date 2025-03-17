@@ -169,7 +169,7 @@ const items = ref([
 
 <style lang="scss">
 .app-header {
-    @apply relative;
+    @apply relative bg-gradient-to-t from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-800/80 text-gray-700 dark:text-gray-300 border-b border-gray-200 dark:border-gray-700;
 
     &-container {
         @apply py-3 container mx-auto;
