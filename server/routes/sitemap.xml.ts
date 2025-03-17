@@ -10,7 +10,7 @@ export default defineEventHandler(async (event) => {
         event.node.res.setHeader('Cache-Control', 'public, max-age=86400'); // 24 hours cache
 
         const sitemap = new SitemapStream({
-            hostname: 'https://numbercrunch.io', // Replace with your domain
+            hostname: 'https://numbercrunch.io',
         });
 
         // Add static routes
@@ -46,7 +46,14 @@ export default defineEventHandler(async (event) => {
         sitemap.end();
 
         const sitemapBuffer = await streamToPromise(sitemap);
-        return sitemapBuffer;
+
+        // Convert buffer to string and ensure it's valid XML
+        const xmlString = sitemapBuffer.toString('utf-8');
+
+        // Set the response
+        event.node.res.end(xmlString);
+
+        return xmlString;
     } catch (error) {
         console.error('Error generating sitemap:', error);
         throw createError({
