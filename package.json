@@ -29,8 +29,7 @@
         "sass": "^1.83.4"
     },
     "resolutions": {
-        "koa": "^2.15.4",
-        "parse-git-config": "^3.0.0",
+        "@babel/runtime": "^7.26.10",
         "canvg": "^4.0.3",
         "dompurify": "^3.2.4"
     }
