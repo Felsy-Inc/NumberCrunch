@@ -21,10 +21,17 @@
         "pinia": "^2.3.0",
         "primeicons": "^7.0.0",
         "primevue": "^4.2.5",
+        "sitemap": "^7.1.1",
         "vue": "latest"
     },
     "devDependencies": {
         "@primevue/nuxt-module": "^4.2.5",
         "sass": "^1.83.4"
+    },
+    "resolutions": {
+        "koa": "^2.15.4",
+        "parse-git-config": "^3.0.0",
+        "canvg": "^4.0.3",
+        "dompurify": "^3.2.4"
     }
 }

@@ -2,6 +2,7 @@
 export default defineNuxtConfig({
     compatibilityDate: '2024-04-03',
     devtools: { enabled: true },
+    telemetry: false,
     modules: [
         '@nuxtjs/tailwindcss',
         '@primevue/nuxt-module',
