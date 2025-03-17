@@ -65,6 +65,7 @@ import { onMounted, watch } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useUserPreferencesStore } from '~/stores/userPreferences';
 import { AVAILABLE_CURRENCIES } from '~/constants/currencies';
+import { useHead } from 'unhead';
 const { $updateTheme } = useNuxtApp();
 
 const AVAILABLE_THEMES = [
@@ -89,6 +90,39 @@ watch(currency, (newCurrency) => {
 onMounted(() => {
     resetColorTheme();
     theme.value = localStorage.getItem('theme');
+});
+
+// Add meta information
+useHead({
+    title: 'Settings - NumberCrunch',
+    meta: [
+        {
+            name: 'description',
+            content:
+                'Customize your NumberCrunch experience. Adjust theme, currency, and other preferences to suit your needs.',
+        },
+        {
+            name: 'keywords',
+            content:
+                'settings, preferences, theme settings, currency settings, calculator preferences',
+        },
+        { property: 'og:title', content: 'Settings - NumberCrunch' },
+        {
+            property: 'og:description',
+            content:
+                'Customize your NumberCrunch experience. Adjust theme, currency, and other preferences to suit your needs.',
+        },
+        { property: 'og:type', content: 'website' },
+        { property: 'og:url', content: 'https://numbercrunch.io/settings' },
+        { name: 'twitter:card', content: 'summary' },
+        { name: 'twitter:title', content: 'Settings - NumberCrunch' },
+        {
+            name: 'twitter:description',
+            content:
+                'Customize your NumberCrunch experience. Adjust theme, currency, and other preferences.',
+        },
+    ],
+    link: [{ rel: 'canonical', href: 'https://numbercrunch.io/settings' }],
 });
 </script>
 

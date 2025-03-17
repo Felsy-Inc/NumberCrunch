@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://numbercrunch.io/sitemap.xml
+Disallow: /settings
