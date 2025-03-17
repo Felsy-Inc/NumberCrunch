@@ -12,7 +12,13 @@ export default defineNuxtConfig({
                 autoImports: ['defineStore', 'storeToRefs', 'acceptHMRUpdate'],
             },
         ],
-        // '@nuxtjs/google-adsense'
+        [
+            '@nuxtjs/google-adsense',
+            {
+                id: 'ca-pub-8907205065732865',
+                onPageLoad: true,
+            },
+        ],
     ],
     imports: {
         dirs: ['stores'],
@@ -21,9 +27,6 @@ export default defineNuxtConfig({
     primevue: {
         importTheme: { from: '@/themes/mytheme.js' },
     },
-    // googleAdsense: {
-    //     id: 'ca-pub-8907205065732865',
-    // },
     runtimeConfig: {
         public: {
             exchangeRateApiKey: process.env.EXCHANGE_RATE_API_KEY,
@@ -61,6 +64,7 @@ export default defineNuxtConfig({
                     content:
                         'Access a comprehensive collection of free online calculators for various mathematical and financial needs.',
                 },
+                { name: 'google-adsense-account', content: 'ca-pub-8907205065732865' },
             ],
             link: [
                 { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
